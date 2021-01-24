@@ -185,17 +185,19 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         await deleteUnusedRecords();
         print('\n');
         print('Last sync: ${DateTime.now()}.');
-        await Future.delayed(Duration(minutes: 1));
       }
+      await Future.delayed(Duration(seconds: 40));
     } while (i == 0);
   }
 
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
-    dbService.streamCollection('coinHistories').listen((data){
+    List<CoinHistory> preList = [];
+    dbService.streamCollection('coinHistories').listen((data) {
       print(data.data.lenght);
     });
-    //IMPLEMENT
+    //TODO factory of coin histlry
+    yield preList;
   }
 }
 
