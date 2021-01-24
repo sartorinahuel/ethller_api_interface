@@ -93,17 +93,17 @@ class CoinRankingRepository extends CoinsRepository {
   @override
   Future<void> updateCoinsDatabase() async {
     final i = 0;
-    do {
-      if (DateTime.now().toUtc().hour == 0) {
+    // do {
+    //   if (DateTime.now().toUtc().hour == 0) {
         final newCoins = await getCoins();
         for (var coin in newCoins) {
           await dbService.setDocument('coins', coin.uuid, coin.toJson());
         }
         print('\n');
         print('Last coins sync: ${DateTime.now()}.');
-        await Future.delayed(Duration(hours: 23, minutes: 55));
-      }
-      await Future.delayed(Duration(minutes: 1));
-    } while (i == 0);
+        // await Future.delayed(Duration(hours: 23, minutes: 55));
+      // }
+    //   await Future.delayed(Duration(minutes: 1));
+    // } while (i == 0);
   }
 }
