@@ -179,13 +179,12 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   Future<void> updateCoinHistories() async {
     final i = 0;
     do {
-      if ((DateTime.now().toUtc().minute % 4) == 0 ||
-          DateTime.now().toUtc().minute == 0) {
+      if ((DateTime.now().toUtc().minute % 4) == 0) {
         await _updateCoinsHostories(coinHistoriesList);
         await deleteUnusedRecords();
         print('\n');
         print('Last sync: ${DateTime.now()}.');
-        await Future.delayed(Duration(minutes: 3));
+        await Future.delayed(Duration(minutes: 1));
       }
       await Future.delayed(Duration(minutes: 1));
     } while (i == 0);
