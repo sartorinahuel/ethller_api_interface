@@ -198,10 +198,11 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     dbService.streamCollection('coinHistories').listen((querySnapshot) {
       final docs = querySnapshot.docs;
       for (var item in docs) {
+        final Timestamp timestamp = item.data()['date'];
         final ch = CoinHistory(
           coinId: item.data()['coinId'],
           price: item.data()['price'],
-          date: DateTime.fromMillisecondsSinceEpoch(item.data()['date'] * 1000),
+          date: DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch * 1000),
         );
         preList.add(ch);
       }
