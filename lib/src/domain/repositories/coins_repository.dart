@@ -1,0 +1,15 @@
+part of ethller_api_interface;
+
+abstract class CoinsRepository {
+  Future<List<Coin>> getCoins();
+  
+  Future<Coin> getCoinById(String id);
+  
+  Future<void> setCoins();
+
+  Future<CoinHistory> getCoinPriceById(String id);
+
+  Future<CoinHistory> getCoinPriceByIdAndTimeStamp(String id, int timeStamp);
+
+  Future<void> deleteCoinHistory(String coinId, String coinHistoryId);
+}
