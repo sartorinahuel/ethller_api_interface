@@ -37,6 +37,8 @@ class CoinRankingRepository extends CoinsRepository {
 
     final rawData = json.decode(response.body);
 
+    print(response.body);
+    
     final utcTime = DateTime.now().toUtc().truncateInMinutes();
 
     return CoinHistory(
