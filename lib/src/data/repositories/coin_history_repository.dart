@@ -196,7 +196,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     List<CoinHistory> preList = [];
     dbService.streamCollection('coinHistories').listen((querySnapshot) {
       for (var item in querySnapshot.docs) {
-        print(item);
+        print(item.data());
         // final ch = CoinHistory.fromJson(item.data());
       }
     });
