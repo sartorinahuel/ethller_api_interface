@@ -195,7 +195,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
     dbService.streamCollection('coinHistories').listen((querySnapshot) {
-      print(querySnapshot.data.docs.lenght);
+      print(querySnapshot.docs.length);
     });
     //TODO factory of coin histlry
     yield preList;

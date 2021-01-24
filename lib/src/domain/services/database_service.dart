@@ -14,5 +14,5 @@ abstract class DBService {
 
   Stream<dynamic> streamDocument(String route, String id);
 
-  Stream<dynamic> streamCollection(String route);
+  Stream<QuerySnapshot> streamCollection(String route);
 }
