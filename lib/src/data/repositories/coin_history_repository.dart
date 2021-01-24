@@ -196,14 +196,19 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
     dbService.streamCollection('coinHistories').listen((querySnapshot) {
+      
       final docs = querySnapshot.docs;
+
       for (var item in docs) {
+
         final Timestamp timestamp = item.data()['date'];
+
         final ch = CoinHistory(
           coinId: item.data()['coinId'],
           price: item.data()['price'],
           date: DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch * 1000),
         );
+
         preList.add(ch);
       }
     });
