@@ -177,14 +177,16 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
 
   @override
   Future<void> updateCoinHistories() async {
-    if ((DateTime.now().toUtc().minute % 4) == 0 ||
-        DateTime.now().toUtc().minute == 0) {
-      await _updateCoinsHostories(coinHistoriesList);
-      await deleteUnusedRecords();
-      print('\n');
-      print('Last sync: ${DateTime.now()}.');
-      // await Future.delayed(Duration(minutes: 1));
-    }
+    Timer.periodic(Duration(minutes: 1), (_) async {
+      if ((DateTime.now().toUtc().minute % 4) == 0 ||
+          DateTime.now().toUtc().minute == 0) {
+        await _updateCoinsHostories(coinHistoriesList);
+        await deleteUnusedRecords();
+        print('\n');
+        print('Last sync: ${DateTime.now()}.');
+        // await Future.delayed(Duration(minutes: 1));
+      }
+    });
   }
 }
 
@@ -209,25 +211,25 @@ Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
       {'price': ethereumHistory.price});
   print('ETHEREUM: \$${ethereumHistory.price.toStringAsFixed(2)}.- USD');
 
-  final bitcoinCashHistory = await coinRepo.getCoinPriceById('ZlZpzOJo43mIo');
-  await dbService.setDocument(
-      'coin_history/${bitcoinCashHistory.coinId}/',
-      bitcoinCashHistory.date.millisecondsSinceEpoch.toString(),
-      {'price': bitcoinCashHistory.price});
-  print('BITCOIN CASH: \$${bitcoinCashHistory.price.toStringAsFixed(2)}.- USD');
+  // final bitcoinCashHistory = await coinRepo.getCoinPriceById('ZlZpzOJo43mIo');
+  // await dbService.setDocument(
+  //     'coin_history/${bitcoinCashHistory.coinId}/',
+  //     bitcoinCashHistory.date.millisecondsSinceEpoch.toString(),
+  //     {'price': bitcoinCashHistory.price});
+  // print('BITCOIN CASH: \$${bitcoinCashHistory.price.toStringAsFixed(2)}.- USD');
 
-  final moneroHistory = await coinRepo.getCoinPriceById('-l8Mn2pVlRs-p');
-  await dbService.setDocument(
-      'coin_history/${moneroHistory.coinId}/',
-      moneroHistory.date.millisecondsSinceEpoch.toString(),
-      {'price': moneroHistory.price});
-  print('MONERO: \$${moneroHistory.price.toStringAsFixed(2)}.- USD');
+  // final moneroHistory = await coinRepo.getCoinPriceById('-l8Mn2pVlRs-p');
+  // await dbService.setDocument(
+  //     'coin_history/${moneroHistory.coinId}/',
+  //     moneroHistory.date.millisecondsSinceEpoch.toString(),
+  //     {'price': moneroHistory.price});
+  // print('MONERO: \$${moneroHistory.price.toStringAsFixed(2)}.- USD');
 
-  final liteCoinHistory = await coinRepo.getCoinPriceById('D7B1x_ks7WhV5');
-  await dbService.setDocument(
-      'coin_history/${liteCoinHistory.coinId}/',
-      liteCoinHistory.date.millisecondsSinceEpoch.toString(),
-      {'price': liteCoinHistory.price});
-  print('LITECOIN: \$${liteCoinHistory.price.toStringAsFixed(2)}.- USD');
+  // final liteCoinHistory = await coinRepo.getCoinPriceById('D7B1x_ks7WhV5');
+  // await dbService.setDocument(
+  //     'coin_history/${liteCoinHistory.coinId}/',
+  //     liteCoinHistory.date.millisecondsSinceEpoch.toString(),
+  //     {'price': liteCoinHistory.price});
+  // print('LITECOIN: \$${liteCoinHistory.price.toStringAsFixed(2)}.- USD');
   print('\n');
 }
