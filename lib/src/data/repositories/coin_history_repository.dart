@@ -193,7 +193,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
     dbService.streamCollection('coinHistories').listen((data){
-      print(data.data);
+      print(data.data.lenght);
     });
     //IMPLEMENT
   }
