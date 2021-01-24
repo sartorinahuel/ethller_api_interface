@@ -191,12 +191,14 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     } while (i == 0);
   }
 
+  StreamController<List<CoinHistory>> _coinHistoriesListStreamController = StreamController.broadcast();
+
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
     dbService.streamCollection('coinHistories').listen((querySnapshot) {
-      
+
       final docs = querySnapshot.docs;
 
       for (var item in docs) {
@@ -212,8 +214,8 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         preList.add(ch);
       }
     });
-
-    yield preList;
+    _coinHistoriesListStreamController.add(preList);
+    yield* _coinHistoriesListStreamController.stream;
   }
 }
 
