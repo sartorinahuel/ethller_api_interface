@@ -40,17 +40,17 @@ class FirebaseCloudstoreService extends DBService {
       //Verifies if the document exists to decide to update or set
       if (requestedDoc.exists) {
         await firestore.doc('$route/$id').update(data).timeout(
-          Duration(seconds: 10),
+          Duration(seconds: 12),
           onTimeout: () {
-            print('Set User Data Error Timeout');
+            print('Set Data Error Timeout');
             throw AppError.connectionTimeout();
           },
         );
       } else {
         await firestore.collection(route).doc(id).set(data).timeout(
-          Duration(seconds: 5),
+          Duration(seconds: 12),
           onTimeout: () {
-            print('Set User Data Error Timeout');
+            print('Set Data Error Timeout');
             throw AppError.connectionTimeout();
           },
         );
