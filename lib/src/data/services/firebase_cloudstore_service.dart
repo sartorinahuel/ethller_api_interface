@@ -101,8 +101,8 @@ class FirebaseCloudstoreService extends DBService {
   }
 
   @override
-  Stream streamCollection(String route) async* {
-    yield firestore.collection(route).snapshots()
+  Stream<QuerySnapshot> streamCollection(String route) async* {
+    yield* firestore.collection(route).snapshots()
     // .handleError(
     //       (error) => throw AppError(
     //         code: 'Stream error',
