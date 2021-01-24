@@ -30,9 +30,7 @@ class CoinRankingRepository extends CoinsRepository {
 
   @override
   Future<CoinHistory> getCoinPriceById(String id) async {
-    final timeStamp = DateTime.now().millisecondsSinceEpoch;
-
-    final url = coinRankingEndpoint + '/coin//$id/historic-price?timestamp=$timeStamp';
+    final url = coinRankingEndpoint + '/coin//$id/historic-price';
 
     final response =
         await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
