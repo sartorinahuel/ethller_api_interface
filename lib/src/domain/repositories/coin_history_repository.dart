@@ -7,5 +7,5 @@ abstract class CoinHistoryRepository {
 
   Future<void> deleteUnusedRecords();
 
-
+  Stream<List<CoinHistory>> coinHistoriesListStream();
 }

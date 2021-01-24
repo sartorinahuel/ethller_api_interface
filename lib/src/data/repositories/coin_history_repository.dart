@@ -177,20 +177,32 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
 
   @override
   Future<void> updateCoinHistories() async {
-    if ((DateTime.now().toUtc().minute % 4) == 0 ||
-        DateTime.now().toUtc().minute == 0) {
-      await _updateCoinsHostories(coinHistoriesList);
-      await deleteUnusedRecords();
-      print('\n');
-      print('Last sync: ${DateTime.now()}.');
-      // await Future.delayed(Duration(minutes: 1));
-    }
+    final i = 0;
+    do {
+      if ((DateTime.now().toUtc().minute % 4) == 0 ||
+          DateTime.now().toUtc().minute == 0) {
+        await _updateCoinsHostories(coinHistoriesList);
+        await deleteUnusedRecords();
+        print('\n');
+        print('Last sync: ${DateTime.now()}.');
+        await Future.delayed(Duration(minutes: 1));
+      }
+    } while (i == 0);
+  }
+
+  @override
+  Stream<List<CoinHistory>> coinHistoriesListStream() async* {
+    dbService.streamCollection('coinHistories').listen((data){
+      print(data.data);
+    });
+    //IMPLEMENT
   }
 }
 
 Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
-  // print('Updating 24h range with 4min gap...');
-  // print('\n');
+  print('Updating 24h range with 4min gap...');
+  print('\n');
+
   ///New instance of CoinHistory of BOTCOIN
   final bitcoinHistory = await coinRepo.getCoinPriceById('Qwsogvtv82FCd');
 
@@ -198,36 +210,63 @@ Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
   coinHistoriesList.add(bitcoinHistory);
 
   ///Adds the new instance to database
-  await dbService.setDocument('coinHistories', 'Qwsogvtv82FCd-${bitcoinHistory.date.millisecondsSinceEpoch}', bitcoinHistory.toJson());
-
+  await dbService.setDocument(
+      'coinHistories',
+      'Qwsogvtv82FCd-${bitcoinHistory.date.millisecondsSinceEpoch}',
+      bitcoinHistory.toJson());
   print('BITCOIN: \$${bitcoinHistory.price.toStringAsFixed(2)}.- USD');
 
-  // final ethereumHistory = await coinRepo.getCoinPriceById('razxDUgYGNAdQ');
-  // await dbService.setDocument(
-  //     'coin_history/${ethereumHistory.coinId}/',
-  //     ethereumHistory.date.millisecondsSinceEpoch.toString(),
-  //     {'price': ethereumHistory.price});
-  // print('ETHEREUM: \$${ethereumHistory.price.toStringAsFixed(2)}.- USD');
+  ///New instance of CoinHistory of ETHEREUM
+  final ethereumHistory = await coinRepo.getCoinPriceById('razxDUgYGNAdQ');
 
-  // final bitcoinCashHistory = await coinRepo.getCoinPriceById('ZlZpzOJo43mIo');
-  // await dbService.setDocument(
-  //     'coin_history/${bitcoinCashHistory.coinId}/',
-  //     bitcoinCashHistory.date.millisecondsSinceEpoch.toString(),
-  //     {'price': bitcoinCashHistory.price});
-  // print('BITCOIN CASH: \$${bitcoinCashHistory.price.toStringAsFixed(2)}.- USD');
+  ///Adds the new instance to the list
+  coinHistoriesList.add(ethereumHistory);
 
-  // final moneroHistory = await coinRepo.getCoinPriceById('-l8Mn2pVlRs-p');
-  // await dbService.setDocument(
-  //     'coin_history/${moneroHistory.coinId}/',
-  //     moneroHistory.date.millisecondsSinceEpoch.toString(),
-  //     {'price': moneroHistory.price});
-  // print('MONERO: \$${moneroHistory.price.toStringAsFixed(2)}.- USD');
+  ///Adds the new instance to database
+  await dbService.setDocument(
+      'coinHistories',
+      'razxDUgYGNAdQ-${ethereumHistory.date.millisecondsSinceEpoch}',
+      ethereumHistory.toJson());
+  print('ETHEREUM: \$${ethereumHistory.price.toStringAsFixed(2)}.- USD');
 
-  // final liteCoinHistory = await coinRepo.getCoinPriceById('D7B1x_ks7WhV5');
-  // await dbService.setDocument(
-  //     'coin_history/${liteCoinHistory.coinId}/',
-  //     liteCoinHistory.date.millisecondsSinceEpoch.toString(),
-  //     {'price': liteCoinHistory.price});
-  // print('LITECOIN: \$${liteCoinHistory.price.toStringAsFixed(2)}.- USD');
+  ///New instance of CoinHistory of BITCON CASH
+  final bitcoinCashHistory = await coinRepo.getCoinPriceById('ZlZpzOJo43mIo');
+
+  ///Adds the new instance to the list
+  coinHistoriesList.add(bitcoinCashHistory);
+
+  ///Adds the new instance to database
+  await dbService.setDocument(
+      'coinHistories',
+      'ZlZpzOJo43mIo-${bitcoinCashHistory.date.millisecondsSinceEpoch}',
+      bitcoinCashHistory.toJson());
+  print('ETHEREUM: \$${bitcoinCashHistory.price.toStringAsFixed(2)}.- USD');
+
+  ///New instance of CoinHistory of MONERO
+  final moneroHistory = await coinRepo.getCoinPriceById('-l8Mn2pVlRs-p');
+
+  ///Adds the new instance to the list
+  coinHistoriesList.add(moneroHistory);
+
+  ///Adds the new instance to database
+  await dbService.setDocument(
+      'coinHistories',
+      '-l8Mn2pVlRs-p-${moneroHistory.date.millisecondsSinceEpoch}',
+      moneroHistory.toJson());
+  print('ETHEREUM: \$${moneroHistory.price.toStringAsFixed(2)}.- USD');
+
+  ///New instance of CoinHistory of LITE COIN
+  final liteCoinHistory = await coinRepo.getCoinPriceById('D7B1x_ks7WhV5');
+
+  ///Adds the new instance to the list
+  coinHistoriesList.add(liteCoinHistory);
+
+  ///Adds the new instance to database
+  await dbService.setDocument(
+      'coinHistories',
+      'D7B1x_ks7WhV5-${liteCoinHistory.date.millisecondsSinceEpoch}',
+      liteCoinHistory.toJson());
+  print('ETHEREUM: \$${liteCoinHistory.price.toStringAsFixed(2)}.- USD');
+
   print('\n');
 }
