@@ -184,9 +184,9 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         await deleteUnusedRecords();
         print('\n');
         print('Last sync: ${DateTime.now()}.');
-        await Future.delayed(Duration(minutes: 1));
+        await Future.delayed(Duration(minutes: 3));
       }
-      await Future.delayed(Duration(minutes: 1));
+      await Future.delayed(Duration(seconds: 20));
     } while (i == 0);
   }
 
