@@ -192,9 +192,10 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
 
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
+    // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
-    dbService.streamCollection('coinHistories').listen((data) {
-      print(data.data.lenght);
+    dbService.streamCollection('coinHistories').listen((querySnapshot) {
+      print(querySnapshot.data.docs.length);
     });
     //TODO factory of coin histlry
     yield preList;
