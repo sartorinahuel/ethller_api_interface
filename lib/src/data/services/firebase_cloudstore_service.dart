@@ -55,7 +55,9 @@ class FirebaseCloudstoreService extends DBService {
           },
         );
       }
-    } on AppError catch (_) {
+    } on AppError catch (appError) {
+      print(appError.code);
+      print(appError.message);
       rethrow;
     } on FirebaseException catch (e) {
       //TODO catch with appError function
