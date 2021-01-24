@@ -201,7 +201,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         final ch = CoinHistory(
           coinId: item.data()['coinId'],
           price: item.data()['price'],
-          date: DateTime.fromMillisecondsSinceEpoch(int.parse(item.data()['date'])),
+          date: DateTime.parse(item.data()['date']),
         );
         preList.add(ch);
       }
