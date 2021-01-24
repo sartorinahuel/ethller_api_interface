@@ -202,12 +202,12 @@ Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
 
   print('BITCOIN: \$${bitcoinHistory.price.toStringAsFixed(2)}.- USD');
 
-  final ethereumHistory = await coinRepo.getCoinPriceById('razxDUgYGNAdQ');
-  await dbService.setDocument(
-      'coin_history/${ethereumHistory.coinId}/',
-      ethereumHistory.date.millisecondsSinceEpoch.toString(),
-      {'price': ethereumHistory.price});
-  print('ETHEREUM: \$${ethereumHistory.price.toStringAsFixed(2)}.- USD');
+  // final ethereumHistory = await coinRepo.getCoinPriceById('razxDUgYGNAdQ');
+  // await dbService.setDocument(
+  //     'coin_history/${ethereumHistory.coinId}/',
+  //     ethereumHistory.date.millisecondsSinceEpoch.toString(),
+  //     {'price': ethereumHistory.price});
+  // print('ETHEREUM: \$${ethereumHistory.price.toStringAsFixed(2)}.- USD');
 
   // final bitcoinCashHistory = await coinRepo.getCoinPriceById('ZlZpzOJo43mIo');
   // await dbService.setDocument(
