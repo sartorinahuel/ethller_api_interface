@@ -198,7 +198,7 @@ Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
   coinHistoriesList.add(bitcoinHistory);
 
   ///Adds the new instance to database
-  await dbService.setDocument('coin_history', 'Qwsogvtv82FCd-${bitcoinHistory.date}', bitcoinHistory.toJson());
+  await dbService.setDocument('coinHistories', 'Qwsogvtv82FCd${bitcoinHistory.date}', bitcoinHistory.toJson());
 
   print('BITCOIN: \$${bitcoinHistory.price.toStringAsFixed(2)}.- USD');
 
