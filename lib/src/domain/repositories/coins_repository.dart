@@ -1,6 +1,8 @@
 part of ethller_api_interface;
 
 abstract class CoinsRepository {
+  List<Coin> coins = [];
+  
   Future<List<Coin>> getCoins();
   
   Future<Coin> getCoinById(String id);

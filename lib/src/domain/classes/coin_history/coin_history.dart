@@ -21,9 +21,9 @@ class CoinHistory {
 
 	Map<String, dynamic> toJson() {
 		return {
-			'price': price,
-			'date': date,
       'coinId': coinId,
+			'date': date,
+			'price': price,
 		};
 	}
 }
