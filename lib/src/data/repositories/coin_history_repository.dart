@@ -185,36 +185,37 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         await deleteUnusedRecords();
         print('\n');
         print('Last sync: ${DateTime.now()}.');
-      await Future.delayed(Duration(minutes: 3));
+        await Future.delayed(Duration(minutes: 3));
       }
       await Future.delayed(Duration(seconds: 30));
     } while (i == 0);
   }
 
-  StreamController<List<CoinHistory>> _coinHistoriesListStreamController = StreamController.broadcast();
+  StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
+      StreamController.broadcast();
 
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
     dbService.streamCollection('coinHistories').listen((querySnapshot) {
-
       final docs = querySnapshot.docs;
 
       for (var item in docs) {
-
         final Timestamp timestamp = item.data()['date'];
 
         final ch = CoinHistory(
           coinId: item.data()['coinId'],
           price: item.data()['price'],
-          date: DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch * 1000),
+          date: DateTime.fromMillisecondsSinceEpoch(
+              timestamp.millisecondsSinceEpoch * 1000),
         );
 
         preList.add(ch);
       }
+
+      _coinHistoriesListStreamController.add(preList);
     });
-    _coinHistoriesListStreamController.add(preList);
     yield* _coinHistoriesListStreamController.stream;
   }
 }
