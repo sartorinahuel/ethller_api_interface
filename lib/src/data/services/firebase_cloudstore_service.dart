@@ -35,11 +35,11 @@ class FirebaseCloudstoreService extends DBService {
     try {
       // ignore: omit_local_variable_types
       final DocumentSnapshot requestedDoc =
-          await firestore.collection(route).doc(id).get();
+          await firestore.doc('$route/$id').get();
 
       //Verifies if the document exists to decide to update or set
       if (requestedDoc.exists) {
-        await firestore.collection(route).doc(id).update(data).timeout(
+        await firestore.doc('$route/$id').update(data).timeout(
           Duration(seconds: 5),
           onTimeout: () {
             print('Set User Data Error Timeout');
