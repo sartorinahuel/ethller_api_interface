@@ -187,7 +187,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         print('Last sync: ${DateTime.now()}.');
         await Future.delayed(Duration(minutes: 3));
       }
-      await Future.delayed(Duration(seconds: 30));
+      await Future.delayed(Duration(minutes: 1));
     } while (i == 0);
   }
 
