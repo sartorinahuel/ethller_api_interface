@@ -4,7 +4,8 @@ class CoinRankingRepository extends CoinsRepository {
   static const String coinRankingEndpoint = 'https://api.coinranking.com/v2';
   static const Map<String, String> coinRankingHttpHeaders = {
     'x-access-token':
-        'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76'
+        'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76',
+    'Access-Control-Allow-Origin': '*',
   };
   var coinRankinClient = http.Client();
 
