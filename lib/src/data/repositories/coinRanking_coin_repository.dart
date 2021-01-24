@@ -6,6 +6,8 @@ class CoinRankingRepository extends CoinsRepository {
     'x-access-token':
         'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76',
     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
+    'Accept': '*/*'
   };
   var coinRankinClient = http.Client();
 
