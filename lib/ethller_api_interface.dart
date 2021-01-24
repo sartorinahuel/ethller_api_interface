@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library ethller_api_interface;
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';

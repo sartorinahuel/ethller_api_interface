@@ -177,16 +177,14 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
 
   @override
   Future<void> updateCoinHistories() async {
-    Timer.periodic(Duration(minutes: 1), (_) async {
-      if ((DateTime.now().toUtc().minute % 4) == 0 ||
-          DateTime.now().toUtc().minute == 0) {
-        await _updateCoinsHostories(coinHistoriesList);
-        await deleteUnusedRecords();
-        print('\n');
-        print('Last sync: ${DateTime.now()}.');
-        // await Future.delayed(Duration(minutes: 1));
-      }
-    });
+    if ((DateTime.now().toUtc().minute % 4) == 0 ||
+        DateTime.now().toUtc().minute == 0) {
+      await _updateCoinsHostories(coinHistoriesList);
+      await deleteUnusedRecords();
+      print('\n');
+      print('Last sync: ${DateTime.now()}.');
+      // await Future.delayed(Duration(minutes: 1));
+    }
   }
 }
 
