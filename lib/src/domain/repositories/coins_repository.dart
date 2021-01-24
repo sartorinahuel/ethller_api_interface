@@ -13,5 +13,5 @@ abstract class CoinsRepository {
 
   Future<CoinHistory> getCoinPriceByIdAndTimeStamp(String id, int timeStamp);
 
-  Future<void> deleteCoinHistory(String coinId, String coinHistoryId);
+  Future<void> updateCoinsDatabase();
 }
