@@ -185,8 +185,9 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         await deleteUnusedRecords();
         print('\n');
         print('Last sync: ${DateTime.now()}.');
+      await Future.delayed(Duration(minutes: 3));
       }
-      await Future.delayed(Duration(seconds: 40));
+      await Future.delayed(Duration(seconds: 30));
     } while (i == 0);
   }
 
@@ -200,7 +201,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         final ch = CoinHistory(
           coinId: item.data()['coinId'],
           price: item.data()['price'],
-          date: DateTime.fromMillisecondsSinceEpoch(item.data()['date']),
+          date: DateTime.fromMillisecondsSinceEpoch(int.parse(item.data()['date'])),
         );
         preList.add(ch);
       }
