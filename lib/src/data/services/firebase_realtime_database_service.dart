@@ -50,7 +50,7 @@ class FirebaseRealtimeDBService extends DBService {
   @override
   Future<void> setDocument(String route, String id, Map data) async {
     try {
-      final url = firebaseRealtimeDBEndpoint + route + '$id.json';
+      final url = firebaseRealtimeDBEndpoint + route + '/$id.json';
 
       final rawData = json.encode(data);
 
