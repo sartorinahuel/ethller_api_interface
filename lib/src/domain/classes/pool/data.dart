@@ -14,7 +14,7 @@ class PoolData {
 	factory PoolData.fromJson(Map<String, dynamic> json) {
 		return PoolData(
 			topMiners: json['topMiners'] as List<dynamic>,
-			minedBlocks: (json['minedBlocks'] as List<MinedBlocks>)?.map((e) {
+			minedBlocks: (json['minedBlocks'] as List<dynamic>)?.map((e) {
 				return e == null ? null : MinedBlocks.fromJson(e as Map<String, dynamic>);
 			})?.toList(),
 			poolStats: json['poolStats'] == null
