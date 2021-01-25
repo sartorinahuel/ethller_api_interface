@@ -202,7 +202,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
       final response = await dbService.getCollection('coinHistories');
 
       for (var rawCoin in response.values) {
-        final timestamp = rawCoin['date'] as int;
+        final timestamp = num.parse(rawCoin['date']);
 
         final ch = CoinHistory(
           coinId: rawCoin['coinId'],
