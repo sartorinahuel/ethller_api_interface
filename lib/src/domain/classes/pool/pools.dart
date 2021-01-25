@@ -1,4 +1,4 @@
-import 'data.dart';
+part of ethller_api_interface;
 
 class Pools {
 	String status;

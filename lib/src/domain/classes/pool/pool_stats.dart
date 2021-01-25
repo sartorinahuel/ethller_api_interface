@@ -1,3 +1,5 @@
+part of ethller_api_interface;
+
 class PoolStats {
 	double hashRate;
 	int miners;

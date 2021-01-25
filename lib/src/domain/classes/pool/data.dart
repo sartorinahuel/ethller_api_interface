@@ -1,18 +1,14 @@
-import 'mined_blocks.dart';
-import 'pool_stats.dart';
-import 'price.dart';
+part of ethller_api_interface;
 
 class PoolData {
 	List<dynamic> topMiners;
 	List<MinedBlocks> minedBlocks;
 	PoolStats poolStats;
-	Price price;
 
 	PoolData({
 		this.topMiners,
 		this.minedBlocks,
 		this.poolStats,
-		this.price,
 	});
 
 	factory PoolData.fromJson(Map<String, dynamic> json) {
@@ -24,9 +20,6 @@ class PoolData {
 			poolStats: json['poolStats'] == null
 					? null
 					: PoolStats.fromJson(json['poolStats'] as Map<String, dynamic>),
-			price: json['price'] == null
-					? null
-					: Price.fromJson(json['price'] as Map<String, dynamic>),
 		);
 	}
 
@@ -35,7 +28,6 @@ class PoolData {
 			'topMiners': topMiners,
 			'minedBlocks': minedBlocks?.map((e) => e?.toJson())?.toList(),
 			'poolStats': poolStats?.toJson(),
-			'price': price?.toJson(),
 		};
 	}
 }

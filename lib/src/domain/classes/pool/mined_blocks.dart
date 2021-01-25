@@ -1,3 +1,5 @@
+part of ethller_api_interface;
+
 class MinedBlocks {
 	int number;
 	String miner;
