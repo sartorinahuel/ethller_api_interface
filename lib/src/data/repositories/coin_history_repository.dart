@@ -198,30 +198,26 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
 
-    // Timer.periodic(Duration(minutes: 4), (_) async {
+    Timer.periodic(Duration(minutes: 1), (_) async {
       final response = await dbService.getCollection('coinHistories');
-      print(response.values);
 
-    // });
-    // dbService.streamCollection('coinHistories').listen((querySnapshot) {
-    //   final docs = querySnapshot.docs;
+      for (var rawCoin in response.values) {
+        final Timestamp timestamp = rawCoin['date'];
 
-    //   for (var item in docs) {
-    //     final Timestamp timestamp = item.data()['date'];
+        final ch = CoinHistory(
+          coinId: rawCoin['coinId'],
+          date: DateTime.fromMillisecondsSinceEpoch(
+              timestamp.millisecondsSinceEpoch * 1000),
+          price: rawCoin['price'],
+        );
 
-    //     final ch = CoinHistory(
-    //       coinId: item.data()['coinId'],
-    //       price: item.data()['price'],
-    //       date: DateTime.fromMillisecondsSinceEpoch(
-    //           timestamp.millisecondsSinceEpoch * 1000),
-    //     );
+        preList.add(ch);
+      }
 
-    //     preList.add(ch);
-    //   }
+      _coinHistoriesListStreamController.add(preList);
+    });
 
-    //   _coinHistoriesListStreamController.add(preList);
-    // });
-    // yield* _coinHistoriesListStreamController.stream;
+    yield* _coinHistoriesListStreamController.stream;
   }
 }
 
