@@ -64,7 +64,7 @@ class FirebaseRealtimeDBService extends DBService {
   }
 
   @override
-  Stream<QuerySnapshot> streamCollection(String route) {
+  Stream<dynamic> streamCollection(String route) {
     // TODO: implement streamCollection
     throw UnimplementedError();
   }

@@ -6,12 +6,10 @@ library ethller_api_interface;
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 export 'package:http/http.dart';
 
 part 'src/domain/globals.dart';
-part 'src/data/services/firebase_cloudstore_service.dart';
 part 'src/data/services/firebase_realtime_database_service.dart';
 part 'src/data/repositories/coinRanking_coin_repository.dart';
 part 'src/data/repositories/coin_history_repository.dart';
