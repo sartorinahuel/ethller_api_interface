@@ -30,14 +30,16 @@ class FirebaseRealtimeDBService extends DBService {
   @override
   Future getCollection(String route) async {
     final url = firebaseRealtimeDBEndpoint + route + '.json';
-
+      print(url);
       final response = await firebaseRealtimeDBClient.get(
         url,
         headers: firebaseRealtimeDBHttpHeaders,
       );
+      print(response.body);
 
       final rawData = json.decode(response.body);
 
+      print(rawData);
       return rawData;
   }
 
