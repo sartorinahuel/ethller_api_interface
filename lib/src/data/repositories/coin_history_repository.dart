@@ -190,16 +190,17 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     } while (i == 0);
   }
 
-  final StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
+  // ignore: prefer_final_fields
+  StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
       StreamController.broadcast();
 
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
-    _coinHistoriesListStreamController.add(preList);
+    _coinHistoriesListStreamController.sink.add(preList);
     yield* _coinHistoriesListStreamController.stream;
-    
+
     final i = 0;
     do {
       final response = await dbService.getCollection('coinHistories');
