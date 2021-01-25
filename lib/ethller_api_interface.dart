@@ -13,6 +13,7 @@ export 'package:cloud_firestore/cloud_firestore.dart';
 
 part 'src/domain/globals.dart';
 part 'src/data/services/firebase_cloudstore_service.dart';
+part 'src/data/services/firebase_realtime_database_service.dart';
 part 'src/data/repositories/coinRanking_coin_repository.dart';
 part 'src/data/repositories/coin_history_repository.dart';
 part 'src/domain/classes/coins/coins.dart';
