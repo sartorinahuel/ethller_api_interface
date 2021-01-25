@@ -24,5 +24,3 @@ part 'src/domain/repositories/coins_repository.dart';
 part 'src/extensions/datetime_extensions.dart';
 part 'src/domain/repositories/coin_history_repository.dart';
 part 'src/domain/services/database_service.dart';
-
-// TODO: Export any libraries intended for clients of this package.
