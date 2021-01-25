@@ -7,4 +7,3 @@ const String endpoint =  'endpoint';
 final CoinsRepository coinRepo = CoinRankingRepository();
 final CoinHistoryRepository coinHistoryRepo = AppCoinHistoryRepository();
 final DBService dbService = FirebaseRealtimeDBService();
-// final DBService dbService = FirebaseCloudstoreService();
