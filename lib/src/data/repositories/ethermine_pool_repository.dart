@@ -27,7 +27,9 @@ class EtherminePoolRepository extends PoolRepository{
     final rawData = json.decode(response.body);
     print('Pool data: $rawData');
 
-    final poolData = PoolData.fromJson(rawData);
+    //TODO handle error status
+    final poolData = Pools.fromJson(rawData).poolData;
+    
     print('Pool total HashRate: ${poolData.poolStats.hashRate.toStringAsFixed(2)}');
 
     _poolDataStreamController.add(poolData);
