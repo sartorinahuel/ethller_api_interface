@@ -19,7 +19,7 @@ class EtherminePoolRepository extends PoolRepository{
   @override
   Future<PoolData> getPoolStats() async {
     print('Getting pool data...');
-    final url = ethermineEndpoint;
+    final url = ethermineEndpoint + '/poolStats';
 
     final response =
         await ethermineClient.get(url, headers: ethermineHttpHeaders);

@@ -13,7 +13,7 @@ part 'src/domain/globals.dart';
 part 'src/data/services/firebase_realtime_database_service.dart';
 part 'src/data/repositories/coinRanking_coin_repository.dart';
 part 'src/data/repositories/coin_history_repository.dart';
-part 'src/data/repositories/ethermin_pool_repository.dart';
+part 'src/data/repositories/ethermine_pool_repository.dart';
 part 'src/domain/classes/coins/coins.dart';
 part 'src/domain/classes/coins/coins_data.dart';
 part 'src/domain/classes/coins/data.dart';
