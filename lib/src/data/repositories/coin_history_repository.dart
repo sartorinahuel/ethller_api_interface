@@ -200,7 +200,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
 
     // Timer.periodic(Duration(minutes: 4), (_) async {
       final response = await dbService.getCollection('coinHistories');
-      print(response);
+      print(response.values);
 
     // });
     // dbService.streamCollection('coinHistories').listen((querySnapshot) {
