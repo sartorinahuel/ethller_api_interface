@@ -191,17 +191,42 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   }
 
   // ignore: prefer_final_fields
-  StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
-     StreamController<List<CoinHistory>>.broadcast();
+  StreamController<List<CoinHistory>> _oneDayRangeCoinHistoriesListStreamController =
+      StreamController<List<CoinHistory>>.broadcast();
+  // ignore: prefer_final_fields
+  StreamController<List<CoinHistory>> _oneWeekRangeCoinHistoriesListStreamController =
+      StreamController<List<CoinHistory>>.broadcast();
+  // ignore: prefer_final_fields
+  StreamController<List<CoinHistory>> _oneMonthRangeCoinHistoriesListStreamController =
+      StreamController<List<CoinHistory>>.broadcast();
+  // ignore: prefer_final_fields
+  StreamController<List<CoinHistory>> _oneYearRangeCoinHistoriesListStreamController =
+      StreamController<List<CoinHistory>>.broadcast();
+  // ignore: prefer_final_fields
+  StreamController<List<CoinHistory>> _twoYearsRangeCoinHistoriesListStreamController =
+      StreamController<List<CoinHistory>>.broadcast();
 
   @override
-  Stream<List<CoinHistory>> get coinHistoriesStream => _coinHistoriesListStreamController.stream;
+  Stream<List<CoinHistory>> get oneDayRangeCoinHistoriesListStream =>
+      _oneDayRangeCoinHistoriesListStreamController.stream;
+  @override
+  Stream<List<CoinHistory>> get oneWeekRangeCoinHistoriesListStream =>
+      _oneDayRangeCoinHistoriesListStreamController.stream;
+  @override
+  Stream<List<CoinHistory>> get oneMonthRangeCoinHistoriesListStream =>
+      _oneDayRangeCoinHistoriesListStreamController.stream;
+  @override
+  Stream<List<CoinHistory>> get oneYearRangeCoinHistoriesListStream =>
+      _oneDayRangeCoinHistoriesListStreamController.stream;
+  @override
+  Stream<List<CoinHistory>> get twoYearsRangeCoinHistoriesListStream =>
+      _oneDayRangeCoinHistoriesListStreamController.stream;
 
   @override
   Future<void> getCoinHistoriesList() async {
     final i = 0;
-    
-    _coinHistoriesListStreamController.add(coinHistoriesList);
+
+    // _coinHistoriesListStreamController.add(coinHistoriesList);
 
     do {
       coinHistoriesList.clear();
@@ -216,11 +241,115 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         coinHistoriesList.add(ch);
       }
 
-      _coinHistoriesListStreamController.add(coinHistoriesList);
+      filterCoinHistoriesIntoRanges(coinHistoriesList);
+      // _coinHistoriesListStreamController.add(coinHistoriesList);
 
       await Future.delayed(Duration(minutes: 1));
     } while (i == 0);
   }
+
+  void filterCoinHistoriesIntoRanges(List<CoinHistory> data) {
+  // ignore: omit_local_variable_types
+  List<CoinHistory> coinHistories = data;
+
+  // ignore: omit_local_variable_types
+  List<CoinHistory> oneDayRange = [];
+  // ignore: omit_local_variable_types
+  List<CoinHistory> oneweekRange = [];
+  // ignore: omit_local_variable_types
+  List<CoinHistory> oneMonthRange = [];
+  // ignore: omit_local_variable_types
+  List<CoinHistory> oneYearRange = [];
+  // ignore: omit_local_variable_types
+  List<CoinHistory> twoYearsRange = [];
+
+  // //Filter selected coin´s histories
+  // for (var ch in data) {
+  //   if (ch.coinId == coinId) {
+  //     coinHistories.add(ch);
+  //   }
+  // }
+
+  //Order by newest first
+  coinHistories.sort((a, b) => b.date.compareTo(a.date));
+
+  //clear range list for refill
+  oneDayRange.clear();
+  //Refill if they are younger than 24hs
+  coinHistories.forEach((element) {
+    if (element.date.isAfter(element.date.subtractDays(1))) {
+      oneDayRange.add(element);
+    }
+  });
+  _oneDayRangeCoinHistoriesListStreamController.add(oneDayRange);
+
+  //clear range list for refill
+  oneweekRange.clear();
+  //Last record date
+  final last = coinHistories[0].date;
+  //Counter for reorder
+  int i = 0;
+  //Refill if they are younger than 7 days and match rules
+  coinHistories.forEach((element) {
+    i++;
+    if (element.date.isAfter(last.subtractDays(7))) {
+      if (last
+          .subtract(Duration(minutes: 56 * i))
+          .isAtSameMomentAs(element.date)) {
+        oneweekRange.add(element);
+      }
+    }
+  });
+  _oneWeekRangeCoinHistoriesListStreamController.add(oneweekRange);
+
+  //clear range list for refill
+  oneMonthRange.clear();
+  //Clear counter
+  i = 0;
+  //Refill if they are younger than one month and match rules
+  coinHistories.forEach((element) {
+    i++;
+    if (element.date.isAfter(last.subtractMonths(1))) {
+      if (last
+          .subtract(Duration(hours: 4 * i))
+          .isAtSameMomentAs(element.date)) {
+        oneMonthRange.add(element);
+      }
+    }
+  });
+  _oneMonthRangeCoinHistoriesListStreamController.add(oneMonthRange);
+
+  //clear range list for refill
+  oneYearRange.clear();
+  //Clear counter
+  i = 0;
+  //Refill if they are younger than one month and match rules
+  coinHistories.forEach((element) {
+    i++;
+    if (element.date.isAfter(last.subtractYeras(1))) {
+      if (last.subtract(Duration(days: 2 * i)).isAtSameMomentAs(element.date)) {
+        oneYearRange.add(element);
+      }
+    }
+  });
+  _oneYearRangeCoinHistoriesListStreamController.add(oneYearRange);
+
+  //clear range list for refill
+  twoYearsRange.clear();
+  //Clear counter
+  i = 0;
+  //Refill if they are younger than one month and match rules
+  coinHistories.forEach((element) {
+    i++;
+    if (element.date.isAfter(last.subtractYeras(2))) {
+      if (last.subtract(Duration(days: 4 * i)).isAtSameMomentAs(element.date)) {
+        twoYearsRange.add(element);
+      }
+    }
+  });
+  _twoYearsRangeCoinHistoriesListStreamController.add(twoYearsRange);
+}
+
 }
 
 Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
@@ -294,3 +423,4 @@ Future<void> _updateCoinsHostories(List<CoinHistory> coinHistoriesList) async {
 
   print('\n');
 }
+
