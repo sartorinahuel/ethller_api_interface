@@ -194,6 +194,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
       StreamController.broadcast();
 
+  @override
   Stream<List<CoinHistory>> get coinHistoriesStream => _coinHistoriesListStreamController.stream;
 
   @override
