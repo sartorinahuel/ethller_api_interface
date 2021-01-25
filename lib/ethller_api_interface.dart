@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 export 'package:http/http.dart';
-export 'package:cloud_firestore/cloud_firestore.dart';
 
 part 'src/domain/globals.dart';
 part 'src/data/services/firebase_cloudstore_service.dart';
