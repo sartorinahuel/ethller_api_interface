@@ -7,3 +7,4 @@ const String endpoint =  'endpoint';
 final CoinsRepository coinRepo = CoinRankingRepository();
 final CoinHistoryRepository coinHistoryRepo = AppCoinHistoryRepository();
 final DBService dbService = FirebaseRealtimeDBService();
+final PoolRepository poolRepo = EtherminePoolRepository();
