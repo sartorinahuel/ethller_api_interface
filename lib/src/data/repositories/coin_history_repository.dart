@@ -199,6 +199,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     List<CoinHistory> preList = [];
     _coinHistoriesListStreamController.add(preList);
     yield* _coinHistoriesListStreamController.stream;
+    
     final i = 0;
     do {
       final response = await dbService.getCollection('coinHistories');
