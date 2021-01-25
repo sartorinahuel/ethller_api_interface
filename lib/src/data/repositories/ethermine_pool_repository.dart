@@ -17,7 +17,7 @@ class EtherminePoolRepository extends PoolRepository{
   Stream<PoolData> get poolDataStream => _poolDataStreamController.stream;
 
   @override
-  Future<PoolData> getPoolStats() async {
+  Future<void> getPoolStats() async {
     print('Getting pool data...');
     final url = ethermineEndpoint + '/poolStats';
 
@@ -29,11 +29,10 @@ class EtherminePoolRepository extends PoolRepository{
 
     //TODO handle error status
     final poolData = Pools.fromJson(rawData).poolData;
-    
+
     print('Pool total HashRate: ${poolData.poolStats.hashRate.toStringAsFixed(2)}');
 
     _poolDataStreamController.add(poolData);
-    return poolData;
   }
 
 

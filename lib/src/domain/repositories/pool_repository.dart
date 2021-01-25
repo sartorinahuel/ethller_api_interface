@@ -5,7 +5,7 @@ abstract class PoolRepository {
 
   Stream<PoolData> get poolDataStream;
 
-  Future<PoolData> getPoolStats();
+  Future<void> getPoolStats();
 
   Future<void> updatePoolStats();
 }
