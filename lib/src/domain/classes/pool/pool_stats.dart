@@ -15,10 +15,10 @@ class PoolStats {
 
 	factory PoolStats.fromJson(Map<String, dynamic> json) {
 		return PoolStats(
-			hashRate: json['hashRate'] as double,
+			hashRate: json['hashRate'] as num,
 			miners: json['miners'] as int,
 			workers: json['workers'] as int,
-			blocksPerHour: json['blocksPerHour'] as double,
+			blocksPerHour: json['blocksPerHour'] as num,
 		);
 	}
 
