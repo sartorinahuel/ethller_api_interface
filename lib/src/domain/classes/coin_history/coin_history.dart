@@ -22,7 +22,7 @@ class CoinHistory {
 	Map<String, dynamic> toJson() {
 		return {
       'coinId': coinId,
-			'date': date.millisecondsSinceEpoch,
+			'date': date.toIso8601String(),
 			'price': price,
 		};
 	}
