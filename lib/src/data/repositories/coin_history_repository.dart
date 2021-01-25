@@ -199,7 +199,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     List<CoinHistory> preList = [];
 
     // Timer.periodic(Duration(minutes: 4), (_) async {
-      final List response = await dbService.getCollection('coinHistories');
+      final response = await dbService.getCollection('coinHistories');
       print(response);
 
     // });
