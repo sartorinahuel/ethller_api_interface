@@ -218,7 +218,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
 
       _coinHistoriesListStreamController.add(coinHistoriesList);
 
-      await Future.delayed(Duration(minutes: 4));
+      await Future.delayed(Duration(minutes: 1));
     } while (i == 0);
   }
 }
