@@ -194,15 +194,16 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
       StreamController.broadcast();
 
-  @override
-  Stream<List<CoinHistory>> coinHistoriesListStream() async* {
-    // ignore: omit_local_variable_types
-    List<CoinHistory> preList = [];
-    _coinHistoriesListStreamController.add(preList);
-    yield* _coinHistoriesListStreamController.stream;
+  Stream<List<CoinHistory>> get coinHistoriesStream => _coinHistoriesListStreamController.stream;
 
+  @override
+  Future<void> getCoinHistoriesList() async {
     final i = 0;
+    
+    _coinHistoriesListStreamController.add(coinHistoriesList);
+
     do {
+      coinHistoriesList.clear();
       final response = await dbService.getCollection('coinHistories');
 
       for (var rawCoin in response.values) {
@@ -211,14 +212,13 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
           date: DateTime.parse(rawCoin['date']),
           price: rawCoin['price'],
         );
-
-        preList.add(ch);
+        coinHistoriesList.add(ch);
       }
 
-      _coinHistoriesListStreamController.add(preList);
+      _coinHistoriesListStreamController.add(coinHistoriesList);
+
       await Future.delayed(Duration(minutes: 4));
     } while (i == 0);
-    yield* _coinHistoriesListStreamController.stream;
   }
 }
 
