@@ -190,19 +190,20 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     } while (i == 0);
   }
 
-  StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
+  final StreamController<List<CoinHistory>> _coinHistoriesListStreamController =
       StreamController.broadcast();
 
   @override
   Stream<List<CoinHistory>> coinHistoriesListStream() async* {
     // ignore: omit_local_variable_types
     List<CoinHistory> preList = [];
-
-    Timer.periodic(Duration(minutes: 1), (_) async {
+    final i = 0;
+    do {
       final response = await dbService.getCollection('coinHistories');
 
       for (var rawCoin in response.values) {
-        final Timestamp timestamp = rawCoin['date'];
+        final timestamp =
+            Timestamp.fromMillisecondsSinceEpoch(int.parse(rawCoin['date']));
 
         final ch = CoinHistory(
           coinId: rawCoin['coinId'],
@@ -215,7 +216,8 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
       }
 
       _coinHistoriesListStreamController.add(preList);
-    });
+      await Future.delayed(Duration(minutes: 4));
+    } while (i == 0);
 
     yield* _coinHistoriesListStreamController.stream;
   }
