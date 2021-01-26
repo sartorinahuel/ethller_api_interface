@@ -266,20 +266,21 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   //Order by newest first
   coinHistories.sort((a, b) => b.date.compareTo(a.date));
 
+  //Last record date
+  final last = coinHistories[0].date;
   //clear range list for refill
   oneDayRange.clear();
   //Refill if they are younger than 24hs
   coinHistories.forEach((element) {
-    if (element.date.isAfter(element.date.subtractDays(1))) {
+    if (element.date.isAfter(last.subtractDays(1))) {
       oneDayRange.add(element);
+      print('Element ${element.date} was added to One day Range');
     }
   });
   _oneDayRangeCoinHistoriesListStreamController.add(oneDayRange);
 
   //clear range list for refill
   oneweekRange.clear();
-  //Last record date
-  final last = coinHistories[0].date;
   //Counter for reorder
   var i = 0;
   //Refill if they are younger than 7 days and match rules
