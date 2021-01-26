@@ -288,7 +288,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //Refill if they are younger than 7 days and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractDays(7))) {
-        if (element.date == last.subtractMinutes(i)) {
+        if (element.date.millisecondsSinceEpoch == last.subtractMinutes(i).millisecondsSinceEpoch) {
           oneweekRange.add(element);
         }
       }
