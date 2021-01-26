@@ -252,8 +252,8 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     } while (i == 0);
   }
 
-  Future<void> filterCoinHistoriesIntoRanges(List<CoinHistory> coinHistories) async {
-
+  Future<void> filterCoinHistoriesIntoRanges(
+      List<CoinHistory> coinHistories) async {
     // ignore: omit_local_variable_types
     List<CoinHistory> oneDayRange = [];
     // ignore: omit_local_variable_types
@@ -284,15 +284,16 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //clear range list for refill
     oneweekRange.clear();
     //Counter for reorder
-    var i = 56 * 60 * 1000;
+    var i = 56;
     //Refill if they are younger than 7 days and match rules
+    var currentDate = last.subtract(Duration(minutes: 56));
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractDays(7))) {
-        if (element.date.millisecondsSinceEpoch == (last.millisecondsSinceEpoch - i)) {
+        if (element.date == currentDate) {
           oneweekRange.add(element);
         }
       }
-      i += 56 * 60 * 1000;
+      currentDate = last.subtract(Duration(minutes: 56));
     });
     print('${oneweekRange.length} elements were added to One Week Range');
     _oneWeekRangeCoinHistoriesListStreamController.add(oneweekRange);
