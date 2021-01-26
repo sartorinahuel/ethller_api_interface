@@ -190,24 +190,23 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     } while (i == 0);
   }
 
-  // ignore: prefer_final_fields
-  StreamController<List<CoinHistory>>
+  final StreamController<List<CoinHistory>>
       _oneDayRangeCoinHistoriesListStreamController =
       StreamController<List<CoinHistory>>.broadcast();
-  // ignore: prefer_final_fields
-  StreamController<List<CoinHistory>>
+
+  final StreamController<List<CoinHistory>>
       _oneWeekRangeCoinHistoriesListStreamController =
       StreamController<List<CoinHistory>>.broadcast();
-  // ignore: prefer_final_fields
-  StreamController<List<CoinHistory>>
+
+  final StreamController<List<CoinHistory>>
       _oneMonthRangeCoinHistoriesListStreamController =
       StreamController<List<CoinHistory>>.broadcast();
-  // ignore: prefer_final_fields
-  StreamController<List<CoinHistory>>
+
+  final StreamController<List<CoinHistory>>
       _oneYearRangeCoinHistoriesListStreamController =
       StreamController<List<CoinHistory>>.broadcast();
-  // ignore: prefer_final_fields
-  StreamController<List<CoinHistory>>
+
+  final StreamController<List<CoinHistory>>
       _twoYearsRangeCoinHistoriesListStreamController =
       StreamController<List<CoinHistory>>.broadcast();
 
@@ -253,9 +252,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     } while (i == 0);
   }
 
-  Future<void> filterCoinHistoriesIntoRanges(List<CoinHistory> data) async {
-    // ignore: omit_local_variable_types
-    List<CoinHistory> coinHistories = data;
+  Future<void> filterCoinHistoriesIntoRanges(List<CoinHistory> coinHistories) async {
 
     // ignore: omit_local_variable_types
     List<CoinHistory> oneDayRange = [];
@@ -279,76 +276,77 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractDays(1))) {
         oneDayRange.add(element);
-        // print('Element ${element.date} was added to One day Range');
       }
     });
+    print('${oneDayRange.length} elements were added to One day Range');
     _oneDayRangeCoinHistoriesListStreamController.add(oneDayRange);
 
     //clear range list for refill
     oneweekRange.clear();
     //Counter for reorder
-    var i = 0;
+    var i = 56;
     //Refill if they are younger than 7 days and match rules
     coinHistories.forEach((element) {
-      i++;
       if (element.date.isAfter(last.subtractDays(7))) {
-        if (element.date == last.subtract(Duration(minutes: 56))) {
+        if (element.date == last.subtract(Duration(minutes: i))) {
           oneweekRange.add(element);
-          print('Element ${element.date} was added to One Week Range');
         }
       }
+      i += 56;
     });
+    print('${oneweekRange.length} elements were added to One Week Range');
     _oneWeekRangeCoinHistoriesListStreamController.add(oneweekRange);
 
     //clear range list for refill
     oneMonthRange.clear();
     //Clear counter
-    i = 0;
+    i = 4;
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
-      i++;
       if (element.date.isAfter(last.subtractMonths(1))) {
-        if (last
-            .subtract(Duration(hours: 4 * i))
-            .isAtSameMomentAs(element.date)) {
+        if (element.date == last.subtract(Duration(hours: i))) {
           oneMonthRange.add(element);
         }
       }
+      i += 4;
     });
+    print('${oneMonthRange.length} elements were added to One Month Range');
     _oneMonthRangeCoinHistoriesListStreamController.add(oneMonthRange);
 
     //clear range list for refill
     oneYearRange.clear();
     //Clear counter
-    i = 0;
+    i = 2;
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
-      i++;
       if (element.date.isAfter(last.subtractYeras(1))) {
         if (last
-            .subtract(Duration(days: 2 * i))
+            .subtract(Duration(days: i))
             .isAtSameMomentAs(element.date)) {
           oneYearRange.add(element);
         }
       }
+      i += 2;
     });
+    print('${oneYearRange.length} elements were added to One year Range');
     _oneYearRangeCoinHistoriesListStreamController.add(oneYearRange);
 
     //clear range list for refill
     twoYearsRange.clear();
     //Clear counter
-    i = 0;
+    i = 4;
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
-      i++;
       if (element.date.isAfter(last.subtractYeras(2))) {
         if (last
-            .subtract(Duration(days: 4 * i))
+            .subtract(Duration(days: i))
             .isAtSameMomentAs(element.date)) {
           twoYearsRange.add(element);
         }
       }
+      i += 4;
     });
+    print('${twoYearsRange.length} elements were added to two years range');
     _twoYearsRangeCoinHistoriesListStreamController.add(twoYearsRange);
   }
 }
