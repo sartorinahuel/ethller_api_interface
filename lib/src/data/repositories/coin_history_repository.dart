@@ -284,16 +284,15 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //clear range list for refill
     oneweekRange.clear();
     //Counter for reorder
-    var i = 56;
-    //Refill if they are younger than 7 days and match rules
     var currentDate = last.subtract(Duration(minutes: 56));
+    //Refill if they are younger than 7 days and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractDays(7))) {
         if (element.date == currentDate) {
           oneweekRange.add(element);
         }
       }
-      currentDate = last.subtract(Duration(minutes: 56));
+      currentDate = currentDate.subtract(Duration(minutes: 56));
     });
     print('${oneweekRange.length} elements were added to One Week Range');
     _oneWeekRangeCoinHistoriesListStreamController.add(oneweekRange);
@@ -301,15 +300,15 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //clear range list for refill
     oneMonthRange.clear();
     //Clear counter
-    i = 4;
+    currentDate = last.subtract(Duration(hours: 4));
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractMonths(1))) {
-        if (element.date == last.subtractHours(i)) {
+        if (element.date == currentDate) {
           oneMonthRange.add(element);
         }
       }
-      i += 4;
+      currentDate = currentDate.subtract(Duration(hours: 4));
     });
     print('${oneMonthRange.length} elements were added to One Month Range');
     _oneMonthRangeCoinHistoriesListStreamController.add(oneMonthRange);
@@ -317,15 +316,15 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //clear range list for refill
     oneYearRange.clear();
     //Clear counter
-    i = 2;
+    currentDate = last.subtract(Duration(days: 2));
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractYears(1))) {
-        if (element.date == last.subtractDays(i)) {
+        if (element.date == currentDate) {
           oneYearRange.add(element);
         }
       }
-      i += 2;
+      currentDate = currentDate.subtract(Duration(days: 2));
     });
     print('${oneYearRange.length} elements were added to One year Range');
     _oneYearRangeCoinHistoriesListStreamController.add(oneYearRange);
@@ -333,15 +332,15 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //clear range list for refill
     twoYearsRange.clear();
     //Clear counter
-    i = 4;
+    currentDate = last.subtract(Duration(days: 4));
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractYears(2))) {
-        if (element.date == last.subtractDays(i)) {
+        if (element.date == currentDate) {
           twoYearsRange.add(element);
         }
       }
-      i += 4;
+      currentDate = currentDate.subtract(Duration(days: 4));
     });
     print('${twoYearsRange.length} elements were added to two years range');
     _twoYearsRangeCoinHistoriesListStreamController.add(twoYearsRange);
