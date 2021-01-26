@@ -292,14 +292,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     coinHistories.forEach((element) {
       i++;
       if (element.date.isAfter(last.subtractDays(7))) {
-        if (element.date == last.subtract(Duration(minutes: 56))) {
-          print(element.date);
-          print(last.subtract(Duration(minutes: 56)));
-          print('Aleluya!');
-        }
-        if (last
-            .subtract(Duration(minutes: 56 * i))
-            .isAtSameMomentAs(element.date)) {
+        if (element.date == last.subtract(Duration(minutes: 56 * i))) {
           oneweekRange.add(element);
           print('Element ${element.date} was added to One Week Range');
         }
