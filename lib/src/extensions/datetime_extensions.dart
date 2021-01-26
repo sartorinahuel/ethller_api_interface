@@ -21,6 +21,36 @@ extension CustomDateTimeExtensions on DateTime {
     );
   }
 
+  DateTime subtractMinutes(int minutes) {
+    return DateTime(
+      // ignore: unnecessary_this
+      this.year,
+      // ignore: unnecessary_this
+      this.month,
+      // ignore: unnecessary_this
+      this.day,
+      // ignore: unnecessary_this
+      this.hour,
+      // ignore: unnecessary_this
+      this.minute - minutes,
+    );
+  }
+
+  DateTime subtractHours(int hours) {
+    return DateTime(
+      // ignore: unnecessary_this
+      this.year,
+      // ignore: unnecessary_this
+      this.month,
+      // ignore: unnecessary_this
+      this.day,
+      // ignore: unnecessary_this
+      this.hour - hours,
+      // ignore: unnecessary_this
+      this.minute,
+    );
+  }
+
   DateTime subtractDays(int days) {
     return DateTime(
       // ignore: unnecessary_this
@@ -51,7 +81,7 @@ extension CustomDateTimeExtensions on DateTime {
     );
   }
 
-  DateTime subtractYeras(int years) {
+  DateTime subtractYears(int years) {
     return DateTime(
       // ignore: unnecessary_this
       this.year - years,

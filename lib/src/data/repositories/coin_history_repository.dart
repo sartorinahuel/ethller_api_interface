@@ -31,9 +31,9 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     final sixMonthsPreviousRecord =
         nowTruncatedInMinutes.subtractMonths(6).millisecondsSinceEpoch;
     final onYearPreviousRecord =
-        nowTruncatedInMinutes.subtractYeras(1).millisecondsSinceEpoch;
+        nowTruncatedInMinutes.subtractYears(1).millisecondsSinceEpoch;
     final twoYearsPreviousRecord =
-        nowTruncatedInMinutes.subtractYeras(2).millisecondsSinceEpoch;
+        nowTruncatedInMinutes.subtractYears(2).millisecondsSinceEpoch;
 
     if (nextWeekPeriodsRecorded != nowTruncatedInMinutes) {
       ///delete [oneDayPreviousRecord] from database
@@ -288,7 +288,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //Refill if they are younger than 7 days and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractDays(7))) {
-        if (element.date == last.subtract(Duration(minutes: i))) {
+        if (element.date == last.subtractMinutes(i)) {
           oneweekRange.add(element);
         }
       }
@@ -319,7 +319,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     i = 2;
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
-      if (element.date.isAfter(last.subtractYeras(1))) {
+      if (element.date.isAfter(last.subtractYears(1))) {
         if (last
             .subtract(Duration(days: i))
             .isAtSameMomentAs(element.date)) {
@@ -337,7 +337,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     i = 4;
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
-      if (element.date.isAfter(last.subtractYeras(2))) {
+      if (element.date.isAfter(last.subtractYears(2))) {
         if (last
             .subtract(Duration(days: i))
             .isAtSameMomentAs(element.date)) {
