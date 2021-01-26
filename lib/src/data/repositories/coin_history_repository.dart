@@ -304,7 +304,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractMonths(1))) {
-        if (element.date == last.subtract(Duration(hours: i))) {
+        if (element.date == last.subtractHours(i)) {
           oneMonthRange.add(element);
         }
       }
@@ -320,9 +320,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractYears(1))) {
-        if (last
-            .subtract(Duration(days: i))
-            .isAtSameMomentAs(element.date)) {
+        if (element.date == last.subtractDays(i)) {
           oneYearRange.add(element);
         }
       }
@@ -338,9 +336,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //Refill if they are younger than one month and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractYears(2))) {
-        if (last
-            .subtract(Duration(days: i))
-            .isAtSameMomentAs(element.date)) {
+        if (element.date == last.subtractDays(i)) {
           twoYearsRange.add(element);
         }
       }
