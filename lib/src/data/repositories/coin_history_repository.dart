@@ -284,15 +284,15 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
     //clear range list for refill
     oneweekRange.clear();
     //Counter for reorder
-    var i = 56;
+    var i = 56 * 60 * 1000;
     //Refill if they are younger than 7 days and match rules
     coinHistories.forEach((element) {
       if (element.date.isAfter(last.subtractDays(7))) {
-        if (element.date.millisecondsSinceEpoch == last.subtract(Duration(minutes: 56)).millisecondsSinceEpoch) {
+        if (element.date.millisecondsSinceEpoch == (last.millisecondsSinceEpoch - i)) {
           oneweekRange.add(element);
         }
       }
-      i += 56;
+      i += 56 * 60 * 1000;
     });
     print('${oneweekRange.length} elements were added to One Week Range');
     _oneWeekRangeCoinHistoriesListStreamController.add(oneweekRange);
