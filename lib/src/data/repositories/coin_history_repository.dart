@@ -281,7 +281,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   //Last record date
   final last = coinHistories[0].date;
   //Counter for reorder
-  int i = 0;
+  var i = 0;
   //Refill if they are younger than 7 days and match rules
   coinHistories.forEach((element) {
     i++;
@@ -290,6 +290,7 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
           .subtract(Duration(minutes: 56 * i))
           .isAtSameMomentAs(element.date)) {
         oneweekRange.add(element);
+        print('Element ${element.date} was added to One Week Range');
       }
     }
   });
