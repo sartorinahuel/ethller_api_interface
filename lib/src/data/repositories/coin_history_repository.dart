@@ -241,14 +241,14 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
         coinHistoriesList.add(ch);
       }
 
-      filterCoinHistoriesIntoRanges(coinHistoriesList);
+      await filterCoinHistoriesIntoRanges(coinHistoriesList);
       // _coinHistoriesListStreamController.add(coinHistoriesList);
 
       await Future.delayed(Duration(minutes: 1));
     } while (i == 0);
   }
 
-  void filterCoinHistoriesIntoRanges(List<CoinHistory> data) {
+  Future<void> filterCoinHistoriesIntoRanges(List<CoinHistory> data) async {
   // ignore: omit_local_variable_types
   List<CoinHistory> coinHistories = data;
 
@@ -262,13 +262,6 @@ class AppCoinHistoryRepository extends CoinHistoryRepository {
   List<CoinHistory> oneYearRange = [];
   // ignore: omit_local_variable_types
   List<CoinHistory> twoYearsRange = [];
-
-  // //Filter selected coin´s histories
-  // for (var ch in data) {
-  //   if (ch.coinId == coinId) {
-  //     coinHistories.add(ch);
-  //   }
-  // }
 
   //Order by newest first
   coinHistories.sort((a, b) => b.date.compareTo(a.date));
