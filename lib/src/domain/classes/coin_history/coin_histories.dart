@@ -2,13 +2,13 @@ part of ethller_api_interface;
 
 class CoinHistories {
   String status;
-  Data data;
+  CoinHistoriesData data;
 
   CoinHistories({this.status, this.data});
 
   CoinHistories.fromJson(Map<String, dynamic> json) {
     this.status = json['status'];
-    this.data = json['data'] == null ? null : Data.fromJson(json['data']);
+    this.data = json['data'] == null ? null : CoinHistoriesData.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
@@ -28,16 +28,13 @@ class CoinHistoriesData {
 
   CoinHistoriesData.fromJson(Map<String, dynamic> json) {
     this.change = json['change'];
-    this.history = json['history'] == null
-        ? []
-        : (json['history'] as List).map((e) => History.fromJson(e)).toList();
+    this.history = json['history'] == null ? [] : (json['history'] as List).map((e) => History.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['change'] = this.change;
-    if (this.history != null)
-      data['history'] = this.history.map((e) => e.toJson()).toList();
+    if (this.history != null) data['history'] = this.history.map((e) => e.toJson()).toList();
     return data;
   }
 }

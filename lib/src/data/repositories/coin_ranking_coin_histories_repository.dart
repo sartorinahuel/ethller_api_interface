@@ -1,20 +1,22 @@
 part of ethller_api_interface;
 
 class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
-  @override
-  // TODO: implement coinHistoriesListStream
-  Stream<List<CoinHistories>> get coinHistoriesListStream =>
-      throw UnimplementedError();
+  //=====================HTTP package data======================================
+  final endpoint = CoinRankingCoinRepository.coinRankingEndpoint;
+  final headers = CoinRankingCoinRepository.coinRankingHttpHeaders;
+  //Http client
+  var coinRankinClient = http.Client();
+  //=====================HTTP package data======================================
 
   @override
-  Future<void> deleteUnusedRecords() {
-    // TODO: implement deleteUnusedRecords
-    throw UnimplementedError();
-  }
+  Future<List<History>> getCoinHistoriesList(String coinId, CoinHistoriesPeriod period) async {
+    final url = endpoint + '/coin/$coinId/history?timePeriod=$period';
+    final response = await coinRankinClient.get(url, headers: headers);
 
-  @override
-  Future<void> getCoinHistoriesList() {
-    // TODO: implement getCoinHistoriesList
-    throw UnimplementedError();
+    final rawData = json.decode(response.body);
+
+    final coin = CoinHistories.fromJson(rawData);
+
+    return await coin.data.history;
   }
 }

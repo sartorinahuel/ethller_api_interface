@@ -1,12 +1,13 @@
 part of ethller_api_interface;
 
 //Global variables
-const String endpoint = 'endpoint';
+int coinsHistoriesRefreshRate = 2; //in minutes
+int coinsDataRefreshRate = 48; //in minutes
 
 //Dependencies
 final CoinsRepository coinRepo = AppCoinRepository();
 final CoinsRepository coinAPIRepo = CoinRankingCoinRepository();
 final CoinHistoriesRepository coinHistoryRepo = AppCoinHistoriesRepository();
-final CoinHistoriesRepository coinAPIHistoryRepo = CoinRankingCoinHistoriesRepositry();
+final CoinHistoriesRepository coinHistoryAPIRepo = CoinRankingCoinHistoriesRepositry();
 final DBService dbService = FirebaseRealtimeDBService();
 final PoolRepository poolRepo = EtherminePoolRepository();
