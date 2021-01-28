@@ -6,6 +6,12 @@ extension CustomDateTimeExtensions on DateTime {
     return this.truncateInMinutes().millisecondsSinceEpoch;
   }
 
+  int minutesSinceReferenceDate(DateTime referenceDate) {
+    final miliseconds =
+        millisecondsSinceEpoch - referenceDate.millisecondsSinceEpoch;
+    return (miliseconds / 60000).truncate();
+  }
+
   DateTime truncateInMinutes() {
     return DateTime(
       // ignore: unnecessary_this
