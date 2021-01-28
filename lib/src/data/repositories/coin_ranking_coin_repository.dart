@@ -1,6 +1,7 @@
 part of ethller_api_interface;
 
-class CoinRankingRepository extends CoinsRepository {
+class CoinRankingCoinRepository extends CoinsRepository {
+  //=====================HTTP package data======================================
   static const String coinRankingEndpoint = 'https://api.coinranking.com/v2';
   static const Map<String, String> coinRankingHttpHeaders = {
     'x-access-token':
@@ -9,7 +10,11 @@ class CoinRankingRepository extends CoinsRepository {
     'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
     'Accept': '*/*'
   };
+  //Http client
   var coinRankinClient = http.Client();
+  //=====================HTTP package data======================================
+
+  //TODO error handling
 
   @override
   Future<Coin> getCoinById(String id) async {
@@ -26,7 +31,7 @@ class CoinRankingRepository extends CoinsRepository {
   }
 
   @override
-  Future<CoinHistory> getCoinPriceById(String id) async {
+  Future<History> getCoinPriceById(String id) async {
     final url = coinRankingEndpoint + '/coin/$id/historic-price';
 
     final response =
@@ -34,18 +39,11 @@ class CoinRankingRepository extends CoinsRepository {
 
     final rawData = json.decode(response.body);
 
-    final utcTime = DateTime.now().toUtc().truncateInMinutes();
-
-    return CoinHistory(
-      date: utcTime,
-      price: num.parse(rawData['data']['price']),
-      coinId: id,
-    );
+    return History.fromJson(rawData['data']);
   }
 
   @override
-  Future<CoinHistory> getCoinPriceByIdAndTimeStamp(
-      String id, int timeStamp) async {
+  Future<History> getCoinPriceByIdAndTimeStamp(String id, int timeStamp) async {
     final url =
         coinRankingEndpoint + '/coin/$id/historic-price?timestamp=$timeStamp';
 
@@ -56,15 +54,7 @@ class CoinRankingRepository extends CoinsRepository {
 
     final rawData = json.decode(response.body);
 
-    final utcTime = DateTime.now().toUtc().truncateInMinutes();
-
-    //TODO error handling
-
-    return CoinHistory(
-      date: utcTime,
-      price: num.parse(rawData['data']['price']),
-      coinId: id,
-    );
+    return History.fromJson(rawData['data']);
   }
 
   @override
@@ -75,36 +65,18 @@ class CoinRankingRepository extends CoinsRepository {
 
     final rawData = json.decode(response.body);
 
-    // ignore: omit_local_variable_types
-    List<Coin> newCoins = [];
+    coins.clear();
 
     for (var item in rawData['data']['coins']) {
       final newCoin = Coin.fromJson(item);
-      newCoins.add(newCoin);
+      coins.add(newCoin);
     }
-    return newCoins;
+    return coins;
   }
 
   @override
   Future<void> setCoins() {
     // TODO: implement setCoins
     throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateCoinsDatabase() async {
-    final i = 0;
-    do {
-      if (DateTime.now().toUtc().hour == 0) {
-        final newCoins = await getCoins();
-        for (var coin in newCoins) {
-          await dbService.setDocument('coins', coin.uuid, coin.toJson());
-        }
-        print('\n');
-        print('Last coins sync: ${DateTime.now()}.');
-        await Future.delayed(Duration(hours: 23, minutes: 55));
-      }
-      await Future.delayed(Duration(minutes: 5));
-    } while (i == 0);
   }
 }

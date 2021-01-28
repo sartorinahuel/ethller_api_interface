@@ -1,15 +1,11 @@
 part of ethller_api_interface;
 
-abstract class CoinHistoryRepository {
-  List<CoinHistory> coinHistoriesList = [];
+enum CoinHistoriesPeriod { ONEDAY, ONEWEEK, ONEMONTH, ONEYEAR, FIVEYEARS }
 
-  Stream<List<CoinHistory>> get oneDayRangeCoinHistoriesListStream;
-  Stream<List<CoinHistory>> get oneWeekRangeCoinHistoriesListStream;
-  Stream<List<CoinHistory>> get oneMonthRangeCoinHistoriesListStream;
-  Stream<List<CoinHistory>> get oneYearRangeCoinHistoriesListStream;
-  Stream<List<CoinHistory>> get twoYearsRangeCoinHistoriesListStream;
+abstract class CoinHistoriesRepository {
+  List<CoinHistories> coinHistoriesList = [];
 
-  Future<void> updateCoinHistories();
+  Stream<List<CoinHistories>> get coinHistoriesListStream;
 
   Future<void> deleteUnusedRecords();
 
