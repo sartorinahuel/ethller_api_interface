@@ -10,7 +10,27 @@ class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
 
   @override
   Future<List<History>> getCoinHistoriesList(String coinId, CoinHistoriesPeriod period) async {
-    final url = endpoint + '/coin/$coinId/history?timePeriod=$period';
+    String periodString;
+    switch (period) {
+      case CoinHistoriesPeriod.ONEDAY:
+        periodString = '24h';
+        break;
+      case CoinHistoriesPeriod.ONEWEEK:
+        periodString = '7d';
+        break;
+      case CoinHistoriesPeriod.ONEMONTH:
+        periodString = '30d';
+        break;
+      case CoinHistoriesPeriod.ONEYEAR:
+        periodString = '1y';
+        break;
+      case CoinHistoriesPeriod.FIVEYEARS:
+        periodString = '5y';
+        break;
+      default:
+        periodString = '24h';
+    }
+    final url = endpoint + '/coin/$coinId/history?timePeriod=$periodString';
     final response = await coinRankinClient.get(url, headers: headers);
 
     final rawData = json.decode(response.body);
