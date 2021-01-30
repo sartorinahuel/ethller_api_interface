@@ -35,7 +35,7 @@ class EtherscanWalletRepository extends WalletRepository {
 
     final rawData = json.decode(response.body);
 
-    return num.parse(rawData['result']);
+    return int.parse(rawData['result']);
   }
 
   Future<List<double>> getExchengeRates() async {

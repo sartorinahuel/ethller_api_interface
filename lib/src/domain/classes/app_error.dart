@@ -3,12 +3,16 @@ part of ethller_api_interface;
 //TODO translation
 //TODO add onError method
 
-
 class AppError extends Error {
   String code;
   String message;
+  Function onError;
 
-  AppError({this.code, this.message});
+  AppError({
+    this.code,
+    this.message,
+    this.onError,
+  });
 
   static AppError noConnection() {
     AppError appError = AppError(
@@ -23,7 +27,7 @@ class AppError extends Error {
       code: 'Something went Wrong',
       message: message,
     );
-    
+
     return appError;
   }
 
@@ -32,7 +36,7 @@ class AppError extends Error {
       code: 'No User Found',
       message: 'No user found for that email',
     );
-    
+
     return appError;
   }
 
@@ -41,17 +45,16 @@ class AppError extends Error {
       code: 'Email already in use',
       message: 'The account already exists for that email',
     );
-    
+
     return appError;
   }
 
   static AppError wrongPassword() {
     AppError appError = AppError(
       code: 'Wrong password',
-      message:
-          'Wrong password provided for that user. Try again or recover it.',
+      message: 'Wrong password provided for that user. Try again or recover it.',
     );
-    
+
     return appError;
   }
 
@@ -60,7 +63,7 @@ class AppError extends Error {
       code: 'Week password',
       message: 'The password provided is too weak',
     );
-    
+
     return appError;
   }
 
@@ -69,17 +72,16 @@ class AppError extends Error {
       code: 'User disabled',
       message: 'The user account is disabled. Please contact support.',
     );
-    
+
     return appError;
   }
 
   static AppError connectionTimeout() {
     AppError appError = AppError(
       code: 'Connection Timeout',
-      message:
-          'Reach timeout trying to contact server. Check internet connection.',
+      message: 'Reach timeout trying to contact server. Check internet connection.',
     );
-    
+
     return appError;
   }
 }
