@@ -61,7 +61,7 @@ class EtherscanWalletRepository extends WalletRepository {
     final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
 
     final rawData = json.decode(response.body);
-    print(rawData);
+
     for (var data in rawData['result']) {
       final tx = WalletTransaction.fromJson(data);
       txs.add(tx);
