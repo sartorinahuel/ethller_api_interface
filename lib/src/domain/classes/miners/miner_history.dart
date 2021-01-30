@@ -24,11 +24,11 @@ class MinerHistory {
   MinerHistory.fromJson(Map<String, dynamic> json) {
     time = json['time'];
     reportedHashrate = json['reportedHashrate'];
-    currentHashrate = json['currentHashrate'];
+    currentHashrate = json['currentHashrate'] as double;
     validShares = json['validShares'];
     invalidShares = json['invalidShares'];
     staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'];
+    averageHashrate = json['averageHashrate'] as double;
     activeWorkers = json['activeWorkers'];
   }
 
