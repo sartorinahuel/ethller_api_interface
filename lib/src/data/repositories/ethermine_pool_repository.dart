@@ -11,14 +11,8 @@ class EtherminePoolRepository extends PoolRepository {
   static final ethermineClient = http.Client();
   //=====================HTTP package data======================================
 
-  // ignore: prefer_final_fields
-  StreamController<PoolData> _poolDataStreamController = StreamController<PoolData>.broadcast();
-
   @override
-  Stream<PoolData> get poolDataStream => _poolDataStreamController.stream;
-
-  @override
-  Future<void> getPoolStats() async {
+  Future<PoolData> getPoolStats() async {
     print('Getting pool data...');
     final url = ethermineEndpoint + '/poolStats';
 
@@ -32,15 +26,6 @@ class EtherminePoolRepository extends PoolRepository {
 
     print('Pool total HashRate: ${poolData.poolStats.hashRate.toStringAsFixed(2)}');
 
-    _poolDataStreamController.add(poolData);
-  }
-
-  @override
-  Future<void> updatePoolStats() async {
-    final i = 0;
-    do {
-      await getPoolStats();
-      await Future.delayed(Duration(minutes: 5));
-    } while (i == 0);
+    return poolData;
   }
 }

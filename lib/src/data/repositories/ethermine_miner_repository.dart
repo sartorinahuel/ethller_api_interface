@@ -7,34 +7,24 @@ class EthermineMinerRepository extends MinersRepository {
   final ethermineClient = EtherminePoolRepository.ethermineClient;
   //=====================HTTP package data======================================
 
-  final StreamController<Miner> _minerStreamController = StreamController<Miner>.broadcast();
-
-  @override
-  Stream<Miner> get minerStream => _minerStreamController.stream;
-
   @override
   Future<Miner> getMinerData(String minerId) async {
-    if (minerId == 'walletId') {
-      _minerStreamController.add(miner);
-      return miner;
-    } else {
-      final currentStats = await updateMinerCurrentStats(minerId);
-      final history = await updateMinerHistory(minerId);
-      final payouts = await updateMinerPayouts(minerId);
-      final minPayout = await updateMinerMinPayout(minerId);
+    final currentStats = await updateMinerCurrentStats(minerId);
+    final history = await updateMinerHistory(minerId);
+    final payouts = await updateMinerPayouts(minerId);
+    final minPayout = await updateMinerMinPayout(minerId);
 
-      //Building Miner object
-      final currentMiner = Miner(
-        id: minerId,
-        currentStats: currentStats,
-        history: history,
-        payouts: payouts,
-        minPayout: minPayout,
-      );
+    //Building Miner object
+    final currentMiner = Miner(
+      id: minerId,
+      currentStats: currentStats,
+      history: history,
+      payouts: payouts,
+      minPayout: minPayout,
+    );
 
-      miner = currentMiner;
-      return currentMiner;
-    }
+    miner = currentMiner;
+    return currentMiner;
   }
 
   @override
@@ -52,7 +42,6 @@ class EthermineMinerRepository extends MinersRepository {
       payouts: miner.payouts,
     );
 
-    _minerStreamController.add(miner);
     return currentStats;
   }
 
@@ -75,8 +64,6 @@ class EthermineMinerRepository extends MinersRepository {
       minPayout: miner.minPayout,
       payouts: miner.payouts,
     );
-
-    _minerStreamController.add(miner);
     return history;
   }
 
@@ -94,8 +81,6 @@ class EthermineMinerRepository extends MinersRepository {
       minPayout: minPayout,
       payouts: miner.payouts,
     );
-
-    _minerStreamController.add(miner);
     return minPayout;
   }
 
@@ -119,7 +104,6 @@ class EthermineMinerRepository extends MinersRepository {
       payouts: payouts,
     );
 
-    _minerStreamController.add(miner);
     return payouts;
   }
 }

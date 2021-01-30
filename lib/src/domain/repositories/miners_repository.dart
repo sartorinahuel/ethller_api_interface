@@ -3,8 +3,6 @@ part of ethller_api_interface;
 abstract class MinersRepository {
   Miner miner = Miner();
 
-  Stream<Miner> get minerStream;
-
   Future<Miner> getMinerData(String minerId);
 
   Future<CurrentStats> updateMinerCurrentStats(String minerId);
