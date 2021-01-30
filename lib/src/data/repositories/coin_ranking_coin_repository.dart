@@ -4,14 +4,13 @@ class CoinRankingCoinRepository extends CoinsRepository {
   //=====================HTTP package data======================================
   static const String coinRankingEndpoint = 'https://api.coinranking.com/v2';
   static const Map<String, String> coinRankingHttpHeaders = {
-    'x-access-token':
-        'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76',
+    'x-access-token': 'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
     'Accept': '*/*'
   };
   //Http client
-  var coinRankinClient = http.Client();
+  static final coinRankinClient = http.Client();
   //=====================HTTP package data======================================
 
   //TODO error handling
@@ -20,8 +19,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
   Future<Coin> getCoinById(String id) async {
     final url = coinRankingEndpoint + '/coin/$id';
 
-    final response =
-        await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
+    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
     final rawData = json.decode(response.body);
 
@@ -34,8 +32,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
   Future<History> getCoinPriceById(String id) async {
     final url = coinRankingEndpoint + '/coin/$id/historic-price';
 
-    final response =
-        await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
+    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
     final rawData = json.decode(response.body);
 
@@ -44,13 +41,11 @@ class CoinRankingCoinRepository extends CoinsRepository {
 
   @override
   Future<History> getCoinPriceByIdAndTimeStamp(String id, int timeStamp) async {
-    final url =
-        coinRankingEndpoint + '/coin/$id/historic-price?timestamp=$timeStamp';
+    final url = coinRankingEndpoint + '/coin/$id/historic-price?timestamp=$timeStamp';
 
     var coinRankinClient = http.Client();
 
-    final response =
-        await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
+    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
     final rawData = json.decode(response.body);
 
@@ -60,8 +55,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
   @override
   Future<List<Coin>> getCoins() async {
     final url = coinRankingEndpoint + '/coins';
-    final response =
-        await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
+    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
     final rawData = json.decode(response.body);
 

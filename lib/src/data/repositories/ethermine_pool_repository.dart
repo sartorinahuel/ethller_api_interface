@@ -1,17 +1,18 @@
 part of ethller_api_interface;
 
-class EtherminePoolRepository extends PoolRepository{
+class EtherminePoolRepository extends PoolRepository {
+  //=====================HTTP package data======================================
   static const String ethermineEndpoint = 'https://api.ethermine.org';
   static const Map<String, String> ethermineHttpHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
     'Accept': '*/*'
   };
-  var ethermineClient = http.Client();
+  static final ethermineClient = http.Client();
+  //=====================HTTP package data======================================
 
   // ignore: prefer_final_fields
-  StreamController<PoolData> _poolDataStreamController =
-     StreamController<PoolData>.broadcast();
+  StreamController<PoolData> _poolDataStreamController = StreamController<PoolData>.broadcast();
 
   @override
   Stream<PoolData> get poolDataStream => _poolDataStreamController.stream;
@@ -21,8 +22,7 @@ class EtherminePoolRepository extends PoolRepository{
     print('Getting pool data...');
     final url = ethermineEndpoint + '/poolStats';
 
-    final response =
-        await ethermineClient.get(url, headers: ethermineHttpHeaders);
+    final response = await ethermineClient.get(url, headers: ethermineHttpHeaders);
 
     final rawData = json.decode(response.body);
     print('Pool data: $rawData');
@@ -34,7 +34,6 @@ class EtherminePoolRepository extends PoolRepository{
 
     _poolDataStreamController.add(poolData);
   }
-
 
   @override
   Future<void> updatePoolStats() async {

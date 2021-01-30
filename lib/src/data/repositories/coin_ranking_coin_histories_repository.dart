@@ -5,7 +5,7 @@ class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
   final endpoint = CoinRankingCoinRepository.coinRankingEndpoint;
   final headers = CoinRankingCoinRepository.coinRankingHttpHeaders;
   //Http client
-  var coinRankinClient = http.Client();
+  final coinRankinClient = http.Client();
   //=====================HTTP package data======================================
 
   @override
