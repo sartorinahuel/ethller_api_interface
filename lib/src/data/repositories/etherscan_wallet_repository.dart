@@ -3,8 +3,8 @@ part of ethller_api_interface;
 class EtherscanWalletRepository extends WalletRepository {
   //=====================HTTP package data======================================
   static const String etherscanEndpoint = 'https://api.etherscan.io/api';
+  static const String etherscanAPIKey = '314QFYT1GQU3AIGWEWIZJKTEZ1E5Q2SF4B';
   static const Map<String, String> etherscanHttpHeaders = {
-    'x-access-token': '314QFYT1GQU3AIGWEWIZJKTEZ1E5Q2SF4B',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
     'Accept': '*/*'
@@ -25,7 +25,7 @@ class EtherscanWalletRepository extends WalletRepository {
 
   @override
   Future<String> getWalletBalance() async {
-    final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest';
+    final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
 
     final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
 
@@ -38,7 +38,8 @@ class EtherscanWalletRepository extends WalletRepository {
   Future<List<WalletTransaction>> getWalletTransactions() async {
     // ignore: omit_local_variable_types
     List<WalletTransaction> txs = [];
-    final url = etherscanEndpoint + '?module=account&action=txlist&address=$walletId&startblock=0&endblock=100&sort=dec';
+    final url = etherscanEndpoint +
+        '?module=account&action=txlist&address=$walletId&startblock=0&endblock=100&sort=dec&apikey=$etherscanAPIKey';
 
     final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
 
