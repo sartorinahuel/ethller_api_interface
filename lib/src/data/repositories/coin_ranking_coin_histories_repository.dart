@@ -32,13 +32,13 @@ class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
     }
 
     final url = endpoint + '/coin/$coinId/history?timePeriod=$periodString';
-    print(url);
+
     final response = await coinRankinClient.get(url, headers: headers);
 
     final rawData = json.decode(response.body);
 
     final coin = CoinHistories.fromJson(rawData);
-    print(coin.data.history.length);
+
     return await coin.data.history;
   }
 }

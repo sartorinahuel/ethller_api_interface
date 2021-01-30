@@ -13,18 +13,14 @@ class EtherminePoolRepository extends PoolRepository {
 
   @override
   Future<PoolData> getPoolStats() async {
-    print('Getting pool data...');
     final url = ethermineEndpoint + '/poolStats';
 
     final response = await ethermineClient.get(url, headers: ethermineHttpHeaders);
 
     final rawData = json.decode(response.body);
-    print('Pool data: $rawData');
 
     //TODO handle error status
     final poolData = Pools.fromJson(rawData).poolData;
-
-    print('Pool total HashRate: ${poolData.poolStats.hashRate.toStringAsFixed(2)}');
 
     return poolData;
   }
