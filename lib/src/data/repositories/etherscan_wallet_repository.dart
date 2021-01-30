@@ -17,8 +17,8 @@ class EtherscanWalletRepository extends WalletRepository {
 
   @override
   Future<Wallet> getWalletData(String walletId) async {
-    final balance = await getWalletBalance();
-    final txs = await getWalletTransactions();
+    final balance = await getWalletBalance(walletId);
+    final txs = await getWalletTransactions(walletId);
     final exchange = await getExchengeRates();
 
     final inUSD = balance * exchange[1];
@@ -28,7 +28,7 @@ class EtherscanWalletRepository extends WalletRepository {
   }
 
   @override
-  Future<num> getWalletBalance() async {
+  Future<double> getWalletBalance(String walletId) async {
     try {
       final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
 
@@ -36,7 +36,9 @@ class EtherscanWalletRepository extends WalletRepository {
 
       final rawData = json.decode(response.body);
 
-      return int.parse(rawData['result']);
+      final number =  int.parse(rawData['result']);
+      print(number / 10000);
+      return number / 10000;
     } catch (e) {
       print('=================ERROR====================');
       print(e);
@@ -57,7 +59,7 @@ class EtherscanWalletRepository extends WalletRepository {
   }
 
   @override
-  Future<List<WalletTransaction>> getWalletTransactions() async {
+  Future<List<WalletTransaction>> getWalletTransactions(String walletId) async {
     // ignore: omit_local_variable_types
     List<WalletTransaction> txs = [];
     final url = etherscanEndpoint +

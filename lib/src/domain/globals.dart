@@ -7,7 +7,6 @@ int poolDataRefreshRate = 5; //in minutes
 int minersDataRefreshRate = 2; //in minutes
 int walletDataRefreshRate = 2; //in minutes
 bool updateTrigger = false; //use to trigger and stop data refresh
-String walletId = 'walletId';
 
 //Dependencies
 final CoinsRepository coinRepo = AppCoinRepository();

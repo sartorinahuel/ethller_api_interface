@@ -3,7 +3,7 @@ part of ethller_api_interface;
 abstract class WalletRepository {
   Future<Wallet> getWalletData(String walletId);
 
-  Future<num> getWalletBalance();
+  Future<double> getWalletBalance(String walletId);
 
-  Future<List<WalletTransaction>> getWalletTransactions();
+  Future<List<WalletTransaction>> getWalletTransactions(String walletId);
 }
