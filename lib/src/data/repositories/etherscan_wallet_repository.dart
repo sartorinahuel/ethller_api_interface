@@ -56,12 +56,12 @@ class EtherscanWalletRepository extends WalletRepository {
     // ignore: omit_local_variable_types
     List<WalletTransaction> txs = [];
     final url = etherscanEndpoint +
-        '?module=account&action=txlist&address=$walletId&startblock=0&endblock=100&sort=dec&apikey=$etherscanAPIKey';
+        '?module=account&action=txlist&address=$walletId&startblock=0&endblock=99999999&sort=dec&apikey=$etherscanAPIKey';
 
     final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
 
     final rawData = json.decode(response.body);
-
+    print(rawData);
     for (var data in rawData['result']) {
       final tx = WalletTransaction.fromJson(data);
       txs.add(tx);
