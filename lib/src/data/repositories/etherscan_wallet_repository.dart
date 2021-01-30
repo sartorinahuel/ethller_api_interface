@@ -31,7 +31,7 @@ class EtherscanWalletRepository extends WalletRepository {
   Future<num> getWalletBalance() async {
     final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
 
-    final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
+    final response = await etherscanClient.get(url);
 
     final rawData = json.decode(response.body);
 
@@ -41,7 +41,7 @@ class EtherscanWalletRepository extends WalletRepository {
   Future<List<double>> getExchengeRates() async {
     final url = etherscanEndpoint + '?module=stats&action=ethprice&apikey=$etherscanAPIKey';
 
-    final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
+    final response = await etherscanClient.get(url);
 
     final rawData = json.decode(response.body);
 
@@ -58,7 +58,7 @@ class EtherscanWalletRepository extends WalletRepository {
     final url = etherscanEndpoint +
         '?module=account&action=txlist&address=$walletId&startblock=0&endblock=99999999&sort=dec&apikey=$etherscanAPIKey';
 
-    final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
+    final response = await etherscanClient.get(url);
 
     final rawData = json.decode(response.body);
 
