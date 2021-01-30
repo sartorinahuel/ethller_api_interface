@@ -3,6 +3,7 @@ part of ethller_api_interface;
 //Global variables
 int coinsHistoriesRefreshRate = 2; //in minutes
 int coinsDataRefreshRate = 48; //in minutes
+String walletId = 'walletId';
 
 //Dependencies
 final CoinsRepository coinRepo = AppCoinRepository();
