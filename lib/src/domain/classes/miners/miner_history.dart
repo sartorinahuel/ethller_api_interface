@@ -2,7 +2,7 @@ part of ethller_api_interface;
 
 class MinerHistory {
   int time;
-  int reportedHashrate;
+  num reportedHashrate;
   num currentHashrate;
   int validShares;
   int invalidShares;

@@ -15,7 +15,13 @@ class EthermineMinerRepository extends MinersRepository {
   @override
   Future<Miner> getMinerData(String minerId) async {
     if (minerId == 'walletId') {
-      miner = Miner();
+      miner = Miner(
+        id: minerId,
+        currentStats: CurrentStats(),
+        history: [],
+        payouts: [],
+        minPayout: 0,
+      );
       _minerStreamController.add(miner);
       return miner;
     } else {
