@@ -4,6 +4,7 @@ part of ethller_api_interface;
 int coinsHistoriesRefreshRate = 2; //in minutes
 int coinsDataRefreshRate = 48; //in minutes
 int poolDataRefreshRate = 5; //in minutes
+int minersDataRefreshRate = 2; //in minutes
 String walletId = 'walletId';
 
 //Dependencies
