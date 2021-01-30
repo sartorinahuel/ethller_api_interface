@@ -14,22 +14,28 @@ class EthermineMinerRepository extends MinersRepository {
 
   @override
   Future<Miner> getMinerData(String minerId) async {
-    final currentStats = await updateMinerCurrentStats(minerId);
-    final history = await updateMinerHistory(minerId);
-    final payouts = await updateMinerPayouts(minerId);
-    final minPayout = await updateMinerMinPayout(minerId);
+    if (minerId == 'walletId') {
+      miner = Miner();
+      _minerStreamController.add(miner);
+      return miner;
+    } else {
+      final currentStats = await updateMinerCurrentStats(minerId);
+      final history = await updateMinerHistory(minerId);
+      final payouts = await updateMinerPayouts(minerId);
+      final minPayout = await updateMinerMinPayout(minerId);
 
-    //Building Miner object
-    final currentMiner = Miner(
-      id: minerId,
-      currentStats: currentStats,
-      history: history,
-      payouts: payouts,
-      minPayout: minPayout,
-    );
+      //Building Miner object
+      final currentMiner = Miner(
+        id: minerId,
+        currentStats: currentStats,
+        history: history,
+        payouts: payouts,
+        minPayout: minPayout,
+      );
 
-    miner = currentMiner;
-    return currentMiner;
+      miner = currentMiner;
+      return currentMiner;
+    }
   }
 
   @override
