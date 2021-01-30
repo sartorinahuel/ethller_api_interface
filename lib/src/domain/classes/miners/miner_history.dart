@@ -3,11 +3,11 @@ part of ethller_api_interface;
 class MinerHistory {
   int time;
   int reportedHashrate;
-  double currentHashrate;
+  num currentHashrate;
   int validShares;
   int invalidShares;
   int staleShares;
-  double averageHashrate;
+  num averageHashrate;
   int activeWorkers;
 
   MinerHistory({
@@ -24,11 +24,11 @@ class MinerHistory {
   MinerHistory.fromJson(Map<String, dynamic> json) {
     time = json['time'];
     reportedHashrate = json['reportedHashrate'];
-    currentHashrate = json['currentHashrate'] as double;
+    currentHashrate = json['currentHashrate'];
     validShares = json['validShares'];
     invalidShares = json['invalidShares'];
     staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'] as double;
+    averageHashrate = json['averageHashrate'];
     activeWorkers = json['activeWorkers'];
   }
 
