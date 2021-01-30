@@ -15,3 +15,4 @@ final CoinHistoriesRepository coinHistoryAPIRepo = CoinRankingCoinHistoriesRepos
 final DBService dbService = FirebaseRealtimeDBService();
 final PoolRepository poolRepo = EtherminePoolRepository();
 final MinersRepository minersRepo = EthermineMinerRepository();
+final WalletRepository walletRepo = EtherscanWalletRepository();
