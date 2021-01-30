@@ -19,19 +19,36 @@ class EtherscanWalletRepository extends WalletRepository {
   Future<Wallet> getWalletData(String walletId) async {
     final balance = await getWalletBalance();
     final txs = await getWalletTransactions();
+    final exchange = await getExchengeRates();
 
-    return Wallet(id: walletId, balance: balance, transactions: txs);
+    final inUSD = balance * exchange[1];
+    final inBTC = balance * exchange[0];
+
+    return Wallet(id: walletId, balance: balance, transactions: txs, inBTC: inBTC, inUSD: inUSD);
   }
 
   @override
-  Future<String> getWalletBalance() async {
+  Future<num> getWalletBalance() async {
     final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
 
     final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
 
     final rawData = json.decode(response.body);
 
-    return rawData['result'];
+    return num.parse(rawData['result']);
+  }
+
+  Future<List<double>> getExchengeRates() async {
+    final url = etherscanEndpoint + '?module=stats&action=ethprice&apikey=$etherscanAPIKey';
+
+    final response = await etherscanClient.get(url, headers: etherscanHttpHeaders);
+
+    final rawData = json.decode(response.body);
+
+    final toUSD = double.parse(rawData['result']['ethusd']);
+    final toBTC = double.parse(rawData['result']['ethbtc']);
+
+    return [toBTC, toUSD];
   }
 
   @override
