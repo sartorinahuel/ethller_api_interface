@@ -29,13 +29,18 @@ class EtherscanWalletRepository extends WalletRepository {
 
   @override
   Future<num> getWalletBalance() async {
-    final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
+    try {
+      final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
 
-    final response = await etherscanClient.get(url);
+      final response = await etherscanClient.get(url);
 
-    final rawData = json.decode(response.body);
+      final rawData = json.decode(response.body);
 
-    return int.parse(rawData['result']);
+      return int.parse(rawData['result']);
+    } catch (e) {
+      print('=================ERROR====================');
+      print(e);
+    }
   }
 
   Future<List<double>> getExchengeRates() async {
