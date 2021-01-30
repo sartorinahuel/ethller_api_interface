@@ -4,16 +4,16 @@ class CurrentStats {
   int time;
   int lastSeen;
   int reportedHashrate;
-  double currentHashrate;
+  num currentHashrate;
   int validShares;
   int invalidShares;
   int staleShares;
-  double averageHashrate;
+  num averageHashrate;
   int activeWorkers;
   int unpaid;
-  double coinsPerMin;
-  double usdPerMin;
-  double btcPerMin;
+  num coinsPerMin;
+  num usdPerMin;
+  num btcPerMin;
 
   CurrentStats({
     this.time,
