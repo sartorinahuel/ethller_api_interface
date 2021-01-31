@@ -4,7 +4,8 @@ class CoinRankingCoinRepository extends CoinsRepository {
   //=====================HTTP package data======================================
   static const String coinRankingEndpoint = 'https://api.coinranking.com/v2';
   static const Map<String, String> coinRankingHttpHeaders = {
-    'x-access-token': 'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76',
+    'x-access-token':
+        'coinranking0225f97ed64816cf9d51c467b93ee73482f41c30efb5eb76',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
     'Accept': '*/*'
@@ -13,59 +14,97 @@ class CoinRankingCoinRepository extends CoinsRepository {
   static final coinRankinClient = http.Client();
   //=====================HTTP package data======================================
 
-  //TODO error handling
-
   @override
   Future<Coin> getCoinById(String id) async {
     final url = coinRankingEndpoint + '/coin/$id';
-
-    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
-
-    final rawData = json.decode(response.body);
-
-    final coin = Coin.fromJson(rawData['data']['coin']);
-
-    return coin;
+    try {
+      final response =
+          await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
+      final rawData = json.decode(response.body);
+      if (rawData['status' == 'success']) {
+        final coin = Coin.fromJson(rawData['data']['coin']);
+        return coin;
+      } else {
+        throw AppError.genericError(
+            message: 'An error occure getting coin data');
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
   }
 
   @override
   Future<History> getCoinPriceById(String id) async {
     final url = coinRankingEndpoint + '/coin/$id/historic-price';
 
-    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
-
-    final rawData = json.decode(response.body);
-
-    return History.fromJson(rawData['data']);
+    try {
+      final response =
+          await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
+      final rawData = json.decode(response.body);
+      if (rawData['status' == 'success']) {
+        return History.fromJson(rawData['data']);
+      } else {
+        throw AppError.genericError(
+            message: 'An error occure getting coin data');
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
   }
 
   @override
   Future<History> getCoinPriceByIdAndTimeStamp(String id, int timeStamp) async {
-    final url = coinRankingEndpoint + '/coin/$id/historic-price?timestamp=$timeStamp';
+    final url =
+        coinRankingEndpoint + '/coin/$id/historic-price?timestamp=$timeStamp';
 
-    var coinRankinClient = http.Client();
+    try {
+      final response =
+          await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
-    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
-
-    final rawData = json.decode(response.body);
-
-    return History.fromJson(rawData['data']);
+      final rawData = json.decode(response.body);
+      if (rawData['status' == 'success']) {
+        return History.fromJson(rawData['data']);
+      } else {
+        throw AppError.genericError(
+            message: 'An error occure getting coin data');
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
   }
 
   @override
   Future<List<Coin>> getCoins() async {
     final url = coinRankingEndpoint + '/coins';
-    final response = await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
-    final rawData = json.decode(response.body);
+    try {
+      final response =
+          await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
-    coins.clear();
+      final rawData = json.decode(response.body);
+      if (rawData['status' == 'success']) {
+        coins.clear();
 
-    for (var item in rawData['data']['coins']) {
-      final newCoin = Coin.fromJson(item);
-      coins.add(newCoin);
+        for (var item in rawData['data']['coins']) {
+          final newCoin = Coin.fromJson(item);
+          coins.add(newCoin);
+        }
+        return coins;
+      } else {
+        throw AppError.genericError(
+            message: 'An error occure getting coin data');
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
     }
-    return coins;
   }
 
   @override

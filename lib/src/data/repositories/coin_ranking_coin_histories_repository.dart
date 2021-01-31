@@ -9,7 +9,8 @@ class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
   //=====================HTTP package data======================================
 
   @override
-  Future<List<History>> getCoinHistoriesList(String coinId, CoinHistoriesPeriod period) async {
+  Future<List<History>> getCoinHistoriesList(
+      String coinId, CoinHistoriesPeriod period) async {
     String periodString;
     switch (period) {
       case CoinHistoriesPeriod.ONEDAY:
@@ -33,12 +34,21 @@ class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
 
     final url = endpoint + '/coin/$coinId/history?timePeriod=$periodString';
 
-    final response = await coinRankinClient.get(url, headers: headers);
+    try {
+      final response = await coinRankinClient.get(url, headers: headers);
 
-    final rawData = json.decode(response.body);
-
-    final coin = CoinHistories.fromJson(rawData);
-
-    return await coin.data.history;
+      final rawData = json.decode(response.body);
+      if (rawData['status' == 'success']) {
+        final coin = CoinHistories.fromJson(rawData);
+        return await coin.data.history;
+      } else {
+        throw AppError.genericError(
+            message: 'An error occure getting coin history data');
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
   }
 }

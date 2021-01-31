@@ -3,20 +3,32 @@ part of ethller_api_interface;
 class AppCoinRepository extends CoinsRepository {
   @override
   Future<Coin> getCoinById(String id) async {
-    final searchedCoin = coins.firstWhere((element) => element.uuid == id);
-    return searchedCoin;
+    try {
+      final searchedCoin = coins.firstWhere((element) => element.uuid == id);
+      return searchedCoin;
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
   Future<History> getCoinPriceById(String id) async {
     //Esto esta asi hasta que haya una DB propia a donde consultar. Ahora es redundante.
-    return await coinAPIRepo.getCoinPriceById(id);
+    try {
+      return await coinAPIRepo.getCoinPriceById(id);
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
   Future<History> getCoinPriceByIdAndTimeStamp(String id, int timeStamp) async {
     //Esto esta asi hasta que haya una DB propia a donde consultar. Ahora es redundante.
-    return await coinAPIRepo.getCoinPriceByIdAndTimeStamp(id, timeStamp);
+    try {
+      return await coinAPIRepo.getCoinPriceByIdAndTimeStamp(id, timeStamp);
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
@@ -29,7 +41,7 @@ class AppCoinRepository extends CoinsRepository {
       final coinsList = await coinAPIRepo.getCoins();
       coins = coinsList;
       return coins;
-    } catch (e) {
+    } catch (_) {
       rethrow;
     }
   }

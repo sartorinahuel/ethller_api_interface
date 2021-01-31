@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library ethller_api_interface;
 
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -34,6 +35,7 @@ part 'src/domain/classes/miners/miner_current_stats.dart';
 part 'src/domain/classes/miners/miner_history.dart';
 part 'src/domain/classes/miners/miner_payout.dart';
 part 'src/domain/classes/app_error.dart';
+part 'src/domain/errors/error_handling.dart';
 part 'src/domain/repositories/pool_repository.dart';
 part 'src/domain/repositories/miners_repository.dart';
 part 'src/domain/repositories/coins_repository.dart';

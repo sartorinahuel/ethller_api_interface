@@ -15,13 +15,24 @@ class EtherminePoolRepository extends PoolRepository {
   Future<PoolData> getPoolStats() async {
     final url = ethermineEndpoint + '/poolStats';
 
-    final response = await ethermineClient.get(url, headers: ethermineHttpHeaders);
+    try {
+      final response =
+          await ethermineClient.get(url, headers: ethermineHttpHeaders);
+      final rawData = json.decode(response.body);
 
-    final rawData = json.decode(response.body);
-
-    //TODO handle error status
-    final poolData = Pools.fromJson(rawData).poolData;
-
-    return poolData;
+      if (rawData['status' == 'OK']) {
+        final poolData = Pools.fromJson(rawData).poolData;
+        return poolData;
+      } else {
+        throw AppError.genericError(
+            message:
+                'An error occure during fetching miner´s current statistics');
+      }
+      
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
   }
 }

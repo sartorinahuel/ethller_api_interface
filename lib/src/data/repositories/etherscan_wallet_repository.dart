@@ -17,37 +17,49 @@ class EtherscanWalletRepository extends WalletRepository {
 
   @override
   Future<Wallet> getWalletData(String walletId) async {
-    final balance = await getWalletBalance(walletId);
-    final txs = await getWalletTransactions(walletId);
-    final exchange = await getExchengeRates();
+    try {
+      final balance = await getWalletBalance(walletId);
+      final txs = await getWalletTransactions(walletId);
+      final exchange = await getExchengeRates();
 
-    final inUSD = balance * exchange[1];
-    final inBTC = balance * exchange[0];
+      final inUSD = balance * exchange[1];
+      final inBTC = balance * exchange[0];
 
-    return Wallet(
+      return Wallet(
         id: walletId,
         balance: balance,
         transactions: txs,
         inBTC: inBTC,
-        inUSD: inUSD);
+        inUSD: inUSD,
+      );
+    } catch (_) {
+      rethrow;
+    }
   }
 
   @override
   Future<double> getWalletBalance(String walletId) async {
+    final url = etherscanEndpoint +
+        '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
     try {
-      final url = etherscanEndpoint +
-          '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
-
       final response = await etherscanClient.get(url);
-
       final rawData = json.decode(response.body);
 
-      final number = int.parse(rawData['result']);
-
-      return number / 1000000000000000000;
+      if (rawData['status'] == '1') {
+        final number = int.parse(rawData['result']);
+        return number / 1000000000000000000;
+      } else {
+        if (rawData['result'] == 'Max rate limit reached') {
+          throw AppError.maxRateLimitReached();
+        } else {
+          throw AppError.genericError(
+              message: 'An error occure during fetching ETH´s exchange rates');
+        }
+      }
+    } on AppError catch (_) {
+      rethrow;
     } catch (e) {
-      print('=================ERROR====================');
-      print(e);
+      throw AppErrorHandling.mapError(e);
     }
   }
 
@@ -55,39 +67,62 @@ class EtherscanWalletRepository extends WalletRepository {
     final url = etherscanEndpoint +
         '?module=stats&action=ethprice&apikey=$etherscanAPIKey';
 
-    final response = await etherscanClient.get(url);
+    try {
+      final response = await etherscanClient.get(url);
+      final rawData = json.decode(response.body);
 
-    final rawData = json.decode(response.body);
+      if (rawData['status'] == '1') {
+        final toUSD = double.parse(rawData['result']['ethusd']);
+        final toBTC = double.parse(rawData['result']['ethbtc']);
 
-    final toUSD = double.parse(rawData['result']['ethusd']);
-    final toBTC = double.parse(rawData['result']['ethbtc']);
+        ethUsd = toUSD;
+        ethBtc = toBTC;
 
-    ethUsd = toUSD;
-    ethBtc = toBTC;
-
-    return [toBTC, toUSD];
+        return [toBTC, toUSD];
+      } else {
+        if (rawData['result'] == 'Max rate limit reached') {
+          throw AppError.maxRateLimitReached();
+        } else {
+          throw AppError.genericError(
+              message: 'An error occure during fetching ETH´s exchange rates');
+        }
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
   }
 
   @override
   Future<List<WalletTransaction>> getWalletTransactions(String walletId) async {
+    // ignore: omit_local_variable_types
+    List<WalletTransaction> txs = [];
+
+    final url = etherscanEndpoint +
+        '?module=account&action=txlist&address=$walletId&startblock=0&endblock=99999999&sort=dec&apikey=$etherscanAPIKey';
     try {
-      // ignore: omit_local_variable_types
-      List<WalletTransaction> txs = [];
-      final url = etherscanEndpoint +
-          '?module=account&action=txlist&address=$walletId&startblock=0&endblock=99999999&sort=dec&apikey=$etherscanAPIKey';
-
       final response = await etherscanClient.get(url);
-
       final rawData = json.decode(response.body);
 
-      for (var data in rawData['result']) {
-        final tx = WalletTransaction.fromJson(data);
-        txs.add(tx);
+      if (rawData['status'] == '1') {
+        for (var data in rawData['result']) {
+          final tx = WalletTransaction.fromJson(data);
+          txs.add(tx);
+        }
+        return txs;
+      } else {
+        if (rawData['result'] == 'Max rate limit reached') {
+          throw AppError.maxRateLimitReached();
+        } else {
+          throw AppError.genericError(
+              message: 'An error occure during fetching wallet transactions');
+        }
       }
-      return txs;
+    } on AppError catch (_) {
+      rethrow;
     } catch (e) {
-      print(e);
-      //TODO error handling
+      throw AppErrorHandling.mapError(e);
     }
   }
 }
