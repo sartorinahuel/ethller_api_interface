@@ -8,6 +8,10 @@ int minersDataRefreshRate = 2; //in minutes
 int walletDataRefreshRate = 2; //in minutes
 bool updateTrigger = false; //use to trigger and stop data refresh
 
+//ExchangeRates
+double ethUsd = 0.0;
+double ethBtc = 0.0;
+
 //Dependencies
 final CoinsRepository coinRepo = AppCoinRepository();
 final CoinsRepository coinAPIRepo = CoinRankingCoinRepository();

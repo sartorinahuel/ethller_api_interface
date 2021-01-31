@@ -55,6 +55,9 @@ class EtherscanWalletRepository extends WalletRepository {
     final toUSD = double.parse(rawData['result']['ethusd']);
     final toBTC = double.parse(rawData['result']['ethbtc']);
 
+    ethUsd = toUSD;
+    ethBtc = toBTC;
+
     return [toBTC, toUSD];
   }
 
