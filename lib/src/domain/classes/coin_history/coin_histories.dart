@@ -7,8 +7,8 @@ class CoinHistories {
   CoinHistories({this.status, this.data});
 
   CoinHistories.fromJson(Map<String, dynamic> json) {
-    this.status = json['status'];
-    this.data = json['data'] == null ? null : CoinHistoriesData.fromJson(json['data']);
+    status = json['status'];
+    data = json['data'] == null ? null : CoinHistoriesData.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {

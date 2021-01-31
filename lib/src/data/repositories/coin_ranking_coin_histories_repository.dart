@@ -38,7 +38,7 @@ class CoinRankingCoinHistoriesRepositry extends CoinHistoriesRepository {
       final response = await coinRankinClient.get(url, headers: headers);
 
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'success']) {
+      if (rawData['status'] == 'success') {
         final coin = CoinHistories.fromJson(rawData);
         return await coin.data.history;
       } else {
