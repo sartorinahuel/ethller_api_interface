@@ -49,7 +49,7 @@ class WalletTransaction {
     transactionIndex = json['transactionIndex'];
     from = json['from'];
     to = json['to'];
-    value = int.parse(json['value']) / 1000000000000000000;
+    value = int.parse(json['value'].substring(0, 17)) / 1000000000000000000;
     gas = json['gas'];
     gasPrice = json['gasPrice'];
     isError = json[' isError'];
