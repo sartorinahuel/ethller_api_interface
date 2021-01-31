@@ -38,7 +38,7 @@ class EthermineMinerRepository extends MinersRepository {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
 
-      if (rawData['status'] == 'OK') {
+      if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
         final currentStats = CurrentStats.fromJson(rawData['data']);
 
         miner = Miner(
@@ -51,7 +51,7 @@ class EthermineMinerRepository extends MinersRepository {
 
         return currentStats;
       } else {
-        if (rawData['error'] == 'Invalid address') {
+        if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(
@@ -75,7 +75,7 @@ class EthermineMinerRepository extends MinersRepository {
     try {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
-      if (rawData['status'] == 'OK') {
+      if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
         for (var item in rawData['data']) {
           final h = MinerHistory.fromJson(item);
           history.add(h);
@@ -90,7 +90,7 @@ class EthermineMinerRepository extends MinersRepository {
         );
         return history;
       } else {
-        if (rawData['error'] == 'Invalid address') {
+        if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(
@@ -112,7 +112,7 @@ class EthermineMinerRepository extends MinersRepository {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
 
-      if (rawData['status'] == 'OK') {
+      if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
         final minPayout =
             (rawData['data']['minPayout'] as int) / 1000000000000000000;
 
@@ -125,7 +125,7 @@ class EthermineMinerRepository extends MinersRepository {
         );
         return minPayout;
       } else {
-        if (rawData['error'] == 'Invalid address') {
+        if (rawData['error'] == 'Invalid address'|| rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(
@@ -148,7 +148,7 @@ class EthermineMinerRepository extends MinersRepository {
     try {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
-      if (rawData['status'] == 'OK') {
+      if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
         for (var item in rawData['data']) {
           final h = MinerPayout.fromJson(item);
           payouts.add(h);
@@ -164,7 +164,7 @@ class EthermineMinerRepository extends MinersRepository {
 
         return payouts;
       } else {
-        if (rawData['error'] == 'Invalid address') {
+        if (rawData['error'] == 'Invalid address'|| rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(
