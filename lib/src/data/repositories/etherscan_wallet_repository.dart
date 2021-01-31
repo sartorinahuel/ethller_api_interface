@@ -24,20 +24,26 @@ class EtherscanWalletRepository extends WalletRepository {
     final inUSD = balance * exchange[1];
     final inBTC = balance * exchange[0];
 
-    return Wallet(id: walletId, balance: balance, transactions: txs, inBTC: inBTC, inUSD: inUSD);
+    return Wallet(
+        id: walletId,
+        balance: balance,
+        transactions: txs,
+        inBTC: inBTC,
+        inUSD: inUSD);
   }
 
   @override
   Future<double> getWalletBalance(String walletId) async {
     try {
-      final url = etherscanEndpoint + '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
+      final url = etherscanEndpoint +
+          '?module=account&action=balance&address=$walletId&tag=latest&apikey=$etherscanAPIKey';
 
       final response = await etherscanClient.get(url);
 
       final rawData = json.decode(response.body);
 
-      final number =  int.parse(rawData['result']);
-      
+      final number = int.parse(rawData['result']);
+
       return number / 1000000000000000000;
     } catch (e) {
       print('=================ERROR====================');
@@ -46,7 +52,8 @@ class EtherscanWalletRepository extends WalletRepository {
   }
 
   Future<List<double>> getExchengeRates() async {
-    final url = etherscanEndpoint + '?module=stats&action=ethprice&apikey=$etherscanAPIKey';
+    final url = etherscanEndpoint +
+        '?module=stats&action=ethprice&apikey=$etherscanAPIKey';
 
     final response = await etherscanClient.get(url);
 
@@ -63,19 +70,24 @@ class EtherscanWalletRepository extends WalletRepository {
 
   @override
   Future<List<WalletTransaction>> getWalletTransactions(String walletId) async {
-    // ignore: omit_local_variable_types
-    List<WalletTransaction> txs = [];
-    final url = etherscanEndpoint +
-        '?module=account&action=txlist&address=$walletId&startblock=0&endblock=99999999&sort=dec&apikey=$etherscanAPIKey';
+    try {
+      // ignore: omit_local_variable_types
+      List<WalletTransaction> txs = [];
+      final url = etherscanEndpoint +
+          '?module=account&action=txlist&address=$walletId&startblock=0&endblock=99999999&sort=dec&apikey=$etherscanAPIKey';
 
-    final response = await etherscanClient.get(url);
+      final response = await etherscanClient.get(url);
 
-    final rawData = json.decode(response.body);
+      final rawData = json.decode(response.body);
 
-    for (var data in rawData['result']) {
-      final tx = WalletTransaction.fromJson(data);
-      txs.add(tx);
+      for (var data in rawData['result']) {
+        final tx = WalletTransaction.fromJson(data);
+        txs.add(tx);
+      }
+      return txs;
+    } catch (e) {
+      print(e);
+      //TODO error handling
     }
-    return txs;
   }
 }
