@@ -51,7 +51,7 @@ class EthermineMinerRepository extends MinersRepository {
 
         return currentStats;
       } else {
-        if (rawData['error' != 'Invalid address']) {
+        if (rawData['error'] == 'Invalid address') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(
