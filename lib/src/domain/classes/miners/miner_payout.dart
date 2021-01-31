@@ -3,9 +3,9 @@ part of ethller_api_interface;
 class MinerPayout {
   int start;
   int end;
-  int amount;
+  double amount;
   String txHash;
-  int paidOn;
+  DateTime paidOn;
 
   MinerPayout({
     this.start,
@@ -18,9 +18,9 @@ class MinerPayout {
   MinerPayout.fromJson(Map<String, dynamic> json) {
     start = json['start'];
     end = json['end'];
-    amount = json['amount'];
+    amount = json['amount'] / 1000000000000000000;
     txHash = json['txHash'];
-    paidOn = json['paidOn'];
+    paidOn = DateTime.fromMillisecondsSinceEpoch(json['paidOn'] * 1000);
   }
 
   Map<String, dynamic> toJson() {

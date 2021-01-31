@@ -5,7 +5,7 @@ extension CustomDateTimeExtensions on DateTime {
     // ignore: unnecessary_this
     return this.truncateInMinutes().millisecondsSinceEpoch;
   }
-
+  
   DateTime truncateInMinutes() {
     return DateTime(
       // ignore: unnecessary_this

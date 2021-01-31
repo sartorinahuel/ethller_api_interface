@@ -2,9 +2,9 @@ part of ethller_api_interface;
 
 class Wallet {
   String id;
-  num balance;
-  num inUSD;
-  num inBTC;
+  double balance;
+  double inUSD;
+  double inBTC;
   List<WalletTransaction> transactions;
 
   Wallet({

@@ -2,14 +2,14 @@ part of ethller_api_interface;
 
 class WalletTransaction {
   String blockNumber;
-  String timeStamp;
+  DateTime timeStamp;
   String hash;
   String nonce;
   String blockHash;
   String transactionIndex;
   String from;
   String to;
-  String value;
+  double value;
   String gas;
   String gasPrice;
   String isError;
@@ -42,14 +42,14 @@ class WalletTransaction {
 
   WalletTransaction.fromJson(Map<String, dynamic> json) {
     blockNumber = json['blockNumber'];
-    timeStamp = json['timeStamp'];
+    timeStamp = DateTime.fromMillisecondsSinceEpoch(int.parse(json['timeStamp']) * 1000);
     hash = json['hash'];
     nonce = json['nonce'];
     blockHash = json['blockHash'];
     transactionIndex = json['transactionIndex'];
     from = json['from'];
     to = json['to'];
-    value = json['value'];
+    value = int.parse(json['value']) / 1000000000000000000;
     gas = json['gas'];
     gasPrice = json['gasPrice'];
     isError = json[' isError'];

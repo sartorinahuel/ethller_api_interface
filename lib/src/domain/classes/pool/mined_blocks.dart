@@ -3,7 +3,7 @@ part of ethller_api_interface;
 class MinedBlocks {
 	int number;
 	String miner;
-	int time;
+	DateTime time;
 
 	MinedBlocks({
 		this.number,
@@ -15,7 +15,7 @@ class MinedBlocks {
 		return MinedBlocks(
 			number: json['number'] as int,
 			miner: json['miner'] as String,
-			time: json['time'] as int,
+			time: DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000),
 		);
 	}
 

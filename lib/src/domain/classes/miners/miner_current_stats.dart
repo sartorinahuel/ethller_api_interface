@@ -1,19 +1,19 @@
 part of ethller_api_interface;
 
 class CurrentStats {
-  int time;
-  int lastSeen;
-  int reportedHashrate;
-  num currentHashrate;
+  DateTime time;
+  DateTime lastSeen;
+  double reportedHashrate;
+  double currentHashrate;
   int validShares;
   int invalidShares;
   int staleShares;
-  num averageHashrate;
+  double averageHashrate;
   int activeWorkers;
-  int unpaid;
-  num coinsPerMin;
-  num usdPerMin;
-  num btcPerMin;
+  double unpaid;
+  double coinsPerMin;
+  double usdPerMin;
+  double btcPerMin;
 
   CurrentStats({
     this.time,
@@ -32,16 +32,16 @@ class CurrentStats {
   });
 
   CurrentStats.fromJson(Map<String, dynamic> json) {
-    time = json['time'];
-    lastSeen = json['lastSeen'];
-    reportedHashrate = json['reportedHashrate'];
-    currentHashrate = json['currentHashrate'];
+    time = DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000);
+    lastSeen = DateTime.fromMillisecondsSinceEpoch(json['lastSeen'] * 1000);
+    reportedHashrate = json['reportedHashrate'] / 1000000;
+    currentHashrate = json['currentHashrate'] / 1000000;
     validShares = json['validShares'];
     invalidShares = json['invalidShares'];
     staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'];
+    averageHashrate = json['averageHashrate'] / 1000000;
     activeWorkers = json['activeWorkers'];
-    unpaid = json['unpaid'];
+    unpaid = json['unpaid'] / 1000000000000000000;
     coinsPerMin = json['coinsPerMin'];
     usdPerMin = json['usdPerMin'];
     btcPerMin = json['btcPerMin'];

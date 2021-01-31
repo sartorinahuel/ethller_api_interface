@@ -37,8 +37,8 @@ class EtherscanWalletRepository extends WalletRepository {
       final rawData = json.decode(response.body);
 
       final number =  int.parse(rawData['result']);
-      print(number / 10000);
-      return number / 10000;
+      
+      return number / 1000000000000000000;
     } catch (e) {
       print('=================ERROR====================');
       print(e);

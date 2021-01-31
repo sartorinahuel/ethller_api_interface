@@ -1,13 +1,13 @@
 part of ethller_api_interface;
 
 class MinerHistory {
-  int time;
-  num reportedHashrate;
-  num currentHashrate;
+  DateTime time;
+  double reportedHashrate;
+  double currentHashrate;
   int validShares;
   int invalidShares;
   int staleShares;
-  num averageHashrate;
+  double averageHashrate;
   int activeWorkers;
 
   MinerHistory({
@@ -22,13 +22,13 @@ class MinerHistory {
   });
 
   MinerHistory.fromJson(Map<String, dynamic> json) {
-    time = json['time'];
-    reportedHashrate = json['reportedHashrate'];
-    currentHashrate = json['currentHashrate'];
+    time = DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000);
+    reportedHashrate = json['reportedHashrate'] / 1000000;
+    currentHashrate = json['currentHashrate'] / 1000000;
     validShares = json['validShares'];
     invalidShares = json['invalidShares'];
     staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'];
+    averageHashrate = json['averageHashrate'] / 1000000;
     activeWorkers = json['activeWorkers'];
   }
 

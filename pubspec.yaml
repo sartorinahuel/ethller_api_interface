@@ -13,4 +13,7 @@ dev_dependencies:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_test_ui: ^1.0.0
   http: ^0.12.2
+  mockito: ^4.1.4
+  test: ^1.15.7

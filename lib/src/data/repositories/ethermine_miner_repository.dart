@@ -68,11 +68,11 @@ class EthermineMinerRepository extends MinersRepository {
   }
 
   @override
-  Future<int> updateMinerMinPayout(String minerId) async {
+  Future<double> updateMinerMinPayout(String minerId) async {
     final url = endpoint + '/miner/$minerId/settings';
     final response4 = await ethermineClient.get(url, headers: headers);
     final rawData4 = json.decode(response4.body);
-    final minPayout = rawData4['data']['minPayout'] as int;
+    final minPayout = (rawData4['data']['minPayout'] as int) / 1000000000000000000;
 
     miner = Miner(
       id: minerId,

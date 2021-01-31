@@ -2,7 +2,7 @@ part of ethller_api_interface;
 
 class Miner {
   String id;
-  int minPayout;
+  double minPayout;
   CurrentStats currentStats;
   List<MinerPayout> payouts;
   List<MinerHistory> history;
