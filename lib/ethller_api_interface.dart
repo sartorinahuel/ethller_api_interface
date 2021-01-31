@@ -43,3 +43,4 @@ part 'src/domain/repositories/coin_history_repository.dart';
 part 'src/domain/repositories/wallet_repository.dart';
 part 'src/domain/services/database_service.dart';
 part 'src/extensions/datetime_extensions.dart';
+part 'src/extensions/string_extensions.dart';

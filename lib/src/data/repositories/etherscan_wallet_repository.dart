@@ -46,7 +46,7 @@ class EtherscanWalletRepository extends WalletRepository {
       final rawData = json.decode(response.body);
 
       if (rawData['status'] == '1') {
-        final number = int.parse(rawData['result']);
+        final number = int.parse(rawData['result'].truncateString(18));
         return number / 1000000000000000000;
       } else {
         if (rawData['result'] == 'Max rate limit reached') {
