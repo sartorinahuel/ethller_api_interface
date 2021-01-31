@@ -38,7 +38,7 @@ class EthermineMinerRepository extends MinersRepository {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
 
-      if (rawData['status' == 'OK']) {
+      if (rawData['status'] == 'OK') {
         final currentStats = CurrentStats.fromJson(rawData['data']);
 
         miner = Miner(
@@ -75,7 +75,7 @@ class EthermineMinerRepository extends MinersRepository {
     try {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'OK']) {
+      if (rawData['status'] == 'OK') {
         for (var item in rawData['data']) {
           final h = MinerHistory.fromJson(item);
           history.add(h);
@@ -112,7 +112,7 @@ class EthermineMinerRepository extends MinersRepository {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
 
-      if (rawData['status' == 'OK']) {
+      if (rawData['status'] == 'OK') {
         final minPayout =
             (rawData['data']['minPayout'] as int) / 1000000000000000000;
 
@@ -125,7 +125,7 @@ class EthermineMinerRepository extends MinersRepository {
         );
         return minPayout;
       } else {
-        if (rawData['error' != 'Invalid address']) {
+        if (rawData['error'] != 'Invalid address') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(
@@ -148,7 +148,7 @@ class EthermineMinerRepository extends MinersRepository {
     try {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'OK']) {
+      if (rawData['status'] == 'OK') {
         for (var item in rawData['data']) {
           final h = MinerPayout.fromJson(item);
           payouts.add(h);
@@ -164,7 +164,7 @@ class EthermineMinerRepository extends MinersRepository {
 
         return payouts;
       } else {
-        if (rawData['error' != 'Invalid address']) {
+        if (rawData['error'] != 'Invalid address') {
           throw AppError.walletNotFound();
         } else {
           throw AppError.genericError(

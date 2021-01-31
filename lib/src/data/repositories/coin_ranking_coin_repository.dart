@@ -21,7 +21,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
       final response =
           await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'success']) {
+      if (rawData['status'] == 'success') {
         final coin = Coin.fromJson(rawData['data']['coin']);
         return coin;
       } else {
@@ -43,7 +43,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
       final response =
           await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'success']) {
+      if (rawData['status'] == 'success') {
         return History.fromJson(rawData['data']);
       } else {
         throw AppError.genericError(
@@ -66,7 +66,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
           await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'success']) {
+      if (rawData['status'] == 'success') {
         return History.fromJson(rawData['data']);
       } else {
         throw AppError.genericError(
@@ -88,7 +88,7 @@ class CoinRankingCoinRepository extends CoinsRepository {
           await coinRankinClient.get(url, headers: coinRankingHttpHeaders);
 
       final rawData = json.decode(response.body);
-      if (rawData['status' == 'success']) {
+      if (rawData['status'] == 'success') {
         coins.clear();
 
         for (var item in rawData['data']['coins']) {

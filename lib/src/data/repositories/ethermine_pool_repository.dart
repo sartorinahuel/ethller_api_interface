@@ -20,7 +20,7 @@ class EtherminePoolRepository extends PoolRepository {
           await ethermineClient.get(url, headers: ethermineHttpHeaders);
       final rawData = json.decode(response.body);
 
-      if (rawData['status' == 'OK']) {
+      if (rawData['status'] == 'OK') {
         final poolData = Pools.fromJson(rawData).poolData;
         return poolData;
       } else {
