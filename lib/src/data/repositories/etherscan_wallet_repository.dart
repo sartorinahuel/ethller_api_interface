@@ -108,7 +108,7 @@ class EtherscanWalletRepository extends WalletRepository {
       if (rawData['status'] == '1') {
         if (rawData['result'].length > 30) {
           for (var i = rawData['result'].length; i > rawData['result'].length - 30; i--) {
-            final tx = WalletTransaction.fromJson(rawData['result'][i]);
+            final tx = WalletTransaction.fromJson(rawData['result'][i-1]);
             txs.add(tx);
           }
         } else {
