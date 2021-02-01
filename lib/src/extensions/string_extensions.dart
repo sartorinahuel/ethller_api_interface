@@ -10,8 +10,12 @@ extension CustomStringExtensions on String {
       return value / divider;
     } else {
       final value = int.parse(this);
-      final divider = 1000000000000000000;
-      return value / divider;
+      if (value == 0) {
+        return value.toDouble();
+      } else {
+        final divider = 1000000000000000000;
+        return value / divider;
+      }
     }
   }
 }
