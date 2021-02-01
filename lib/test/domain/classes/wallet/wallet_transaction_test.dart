@@ -2,7 +2,7 @@ import 'package:ethller_api_interface/ethller_api_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final walletId = '0xfa7b7c32e12549179da6f25f6f58c12313a9b1b8';
+  final walletId = '0xcf18cbfe5cdc89d824828a19e827d2e756d3d1af';
 
   group('Classes', () {
     test('Json to Wallet', () async {
