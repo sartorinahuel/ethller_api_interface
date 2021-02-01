@@ -41,7 +41,7 @@ class CurrentStats {
     staleShares = json['staleShares'];
     averageHashrate = json['averageHashrate'] / 1000000;
     activeWorkers = json['activeWorkers'];
-    unpaid = json['unpaid'] / 1000000000000000000;
+    unpaid = (json['unpaid'] as String).toDoubleFromBigInt();
     coinsPerMin = json['coinsPerMin'];
     usdPerMin = json['usdPerMin'];
     btcPerMin = json['btcPerMin'];
