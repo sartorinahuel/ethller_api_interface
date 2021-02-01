@@ -2,12 +2,11 @@ part of ethller_api_interface;
 
 extension CustomStringExtensions on String {
   double toDoubleFromBigInt() {
-    final value = int.parse(this);
-    if (value == 0) {
-      return 0;
+    if (this == '0') {
+      return 0.0;
     } else {
-      final restLength = substring(17).length ?? 0;
-      if (restLength != 0) {
+      if (length > 17) {
+        final restLength = substring(17).length;
         final divider = 1000000000000000000 / (pow(10, restLength));
         final stringValue = substring(0, 17);
         final value = int.parse(stringValue);

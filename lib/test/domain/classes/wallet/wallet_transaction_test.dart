@@ -26,7 +26,7 @@ void main() {
         'transactionIndex': '19',
         'from': '0xcf18cbfe5cdc89d824828a19e827d2e756d3d1af',
         'to': '0x5d57c62e214879ca9c6979a349d8bf8f39b167d2',
-        'value': '0',
+        'value': '1234567890123456789012324567',
         'gas': '21000',
         'gasPrice': '35000000000',
         'isError': '0',
