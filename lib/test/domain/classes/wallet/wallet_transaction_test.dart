@@ -14,6 +14,33 @@ void main() {
       expect(wallet.inUSD, isInstanceOf<double>());
       print(wallet.inUSD);
     });
+    test('Json to Wallet tx', () async {
+      final json = {
+        'blockNumber': '11374902',
+        'timeStamp': '1606936029',
+        'hash':
+            '0x4529cf433fe835a005ba605cd8ec483fc65151bd594371750f05d9100f2d23d5',
+        'nonce': '55',
+        'blockHash':
+            '0x9451261a29270494b7dbebc11e0114323e2539875be5f00c1e1e3b97fbb9dde1',
+        'transactionIndex': '19',
+        'from': '0xcf18cbfe5cdc89d824828a19e827d2e756d3d1af',
+        'to': '0x5d57c62e214879ca9c6979a349d8bf8f39b167d2',
+        'value': '0',
+        'gas': '21000',
+        'gasPrice': '35000000000',
+        'isError': '0',
+        'txreceipt_status': '1',
+        'input': '0x',
+        'contractAddress': '',
+        'cumulativeGasUsed': '1210487',
+        'gasUsed': '21000',
+        'confirmations': '392728'
+      };
+      final wallet = await WalletTransaction.fromJson(json);
+      expect(wallet, isInstanceOf<WalletTransaction>());
+    });
+
     test('Json to Miner', () async {
       final miner = await minersRepo.getMinerData(walletId);
       expect(miner, isInstanceOf<Miner>());
