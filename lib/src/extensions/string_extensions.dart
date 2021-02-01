@@ -11,7 +11,7 @@ extension CustomStringExtensions on String {
     } else {
       final value = int.parse(this);
       if (value == 0) {
-        return value.toDouble();
+        return 0;
       } else {
         final divider = 1000000000000000000;
         return value / divider;
