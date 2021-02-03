@@ -32,6 +32,8 @@ part 'src/domain/classes/pool/pool_stats.dart';
 part 'src/domain/classes/pool/pools.dart';
 part 'src/domain/classes/pool/mined_blocks.dart';
 part 'src/domain/classes/miners/miner.dart';
+part 'src/domain/classes/workers/workers.dart';
+part 'src/domain/classes/workers/worker_history.dart';
 part 'src/domain/classes/miners/miner_current_stats.dart';
 part 'src/domain/classes/miners/miner_history.dart';
 part 'src/domain/classes/miners/miner_payout.dart';

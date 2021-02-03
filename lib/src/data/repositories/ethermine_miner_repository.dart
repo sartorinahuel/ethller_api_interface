@@ -54,9 +54,7 @@ class EthermineMinerRepository extends MinersRepository {
         if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
-          throw AppError.genericError(
-              message:
-                  'An error occure during fetching miner´s current statistics');
+          throw AppError.genericError(message: 'An error occure during fetching miner´s current statistics');
         }
       }
     } on AppError catch (_) {
@@ -93,8 +91,7 @@ class EthermineMinerRepository extends MinersRepository {
         if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
-          throw AppError.genericError(
-              message: 'An error occure during fetching miner´s history');
+          throw AppError.genericError(message: 'An error occure during fetching miner´s history');
         }
       }
     } on AppError catch (_) {
@@ -113,8 +110,7 @@ class EthermineMinerRepository extends MinersRepository {
       final rawData = json.decode(response.body);
 
       if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
-        final minPayout =
-            (rawData['data']['minPayout'] as int) / 1000000000000000000;
+        final minPayout = (rawData['data']['minPayout'] as int) / 1000000000000000000;
 
         miner = Miner(
           id: minerId,
@@ -125,12 +121,10 @@ class EthermineMinerRepository extends MinersRepository {
         );
         return minPayout;
       } else {
-        if (rawData['error'] == 'Invalid address'|| rawData['data'] == 'NO DATA') {
+        if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
-          throw AppError.genericError(
-              message:
-                  'An error occure during fetching miner´s minimum payout setting');
+          throw AppError.genericError(message: 'An error occure during fetching miner´s minimum payout setting');
         }
       }
     } on AppError catch (_) {
@@ -164,12 +158,69 @@ class EthermineMinerRepository extends MinersRepository {
 
         return payouts;
       } else {
-        if (rawData['error'] == 'Invalid address'|| rawData['data'] == 'NO DATA') {
+        if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
           throw AppError.walletNotFound();
         } else {
-          throw AppError.genericError(
-              message:
-                  'An error occure during fetching miner´s payouts');
+          throw AppError.genericError(message: 'An error occure during fetching miner´s payouts');
+        }
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
+  }
+
+  @override
+  Future<List<Workers>> getWorkers(String minerId) async {
+    // ignore: omit_local_variable_types
+    List<Workers> workers = [];
+    final url = endpoint + '/miner/$minerId/workers';
+    try {
+      final response = await ethermineClient.get(url, headers: headers);
+      final rawData = json.decode(response.body);
+      if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
+        for (var item in rawData['data']) {
+          final h = Workers.fromJson(item);
+          final history = await getWorkerHistory(minerId, h.worker);
+          h.history = history;
+          workers.add(h);
+        }
+        return workers;
+      } else {
+        if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
+          throw AppError.walletNotFound();
+        } else {
+          throw AppError.genericError(message: 'An error occure during fetching workers');
+        }
+      }
+    } on AppError catch (_) {
+      rethrow;
+    } catch (e) {
+      throw AppErrorHandling.mapError(e);
+    }
+  }
+
+  @override
+  Future<List<WorkerHistory>> getWorkerHistory(String minerId, String workerId) async {
+    // ignore: omit_local_variable_types
+    List<WorkerHistory> histories = [];
+    final url = endpoint + '/miner/$minerId/worker/$workerId/history';
+    try {
+      final response = await ethermineClient.get(url, headers: headers);
+      final rawData = json.decode(response.body);
+      if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
+        for (var item in rawData['data']) {
+          final h = WorkerHistory.fromJson(item);
+          histories.add(h);
+        }
+
+        return histories;
+      } else {
+        if (rawData['error'] == 'Invalid address' || rawData['data'] == 'NO DATA') {
+          throw AppError.walletNotFound();
+        } else {
+          throw AppError.genericError(message: 'An error occure during fetching worker´s history');
         }
       }
     } on AppError catch (_) {

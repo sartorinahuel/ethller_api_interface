@@ -9,4 +9,6 @@ abstract class MinersRepository {
   Future<double> updateMinerMinPayout(String minerId);
   Future<List<MinerHistory>> updateMinerHistory(String minerId);
   Future<List<MinerPayout>> updateMinerPayouts(String minerId);
+  Future<List<Workers>> getWorkers(String minerId);
+  Future<List<WorkerHistory>> getWorkerHistory(String minerId, String workerId);
 }

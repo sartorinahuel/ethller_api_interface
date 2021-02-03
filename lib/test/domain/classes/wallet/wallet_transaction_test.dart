@@ -2,7 +2,7 @@ import 'package:ethller_api_interface/ethller_api_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final walletId = '0xcf18cbfe5cdc89d824828a19e827d2e756d3d1af';
+  final walletId = '0xF02bB51E0aEbCE3FeDd890555A19582FEBa1Eb3a';
 
   group('Classes', () {
     test('Json to Wallet', () async {
@@ -18,11 +18,9 @@ void main() {
       final json = {
         'blockNumber': '11374902',
         'timeStamp': '1606936029',
-        'hash':
-            '0x4529cf433fe835a005ba605cd8ec483fc65151bd594371750f05d9100f2d23d5',
+        'hash': '0x4529cf433fe835a005ba605cd8ec483fc65151bd594371750f05d9100f2d23d5',
         'nonce': '55',
-        'blockHash':
-            '0x9451261a29270494b7dbebc11e0114323e2539875be5f00c1e1e3b97fbb9dde1',
+        'blockHash': '0x9451261a29270494b7dbebc11e0114323e2539875be5f00c1e1e3b97fbb9dde1',
         'transactionIndex': '19',
         'from': '0xcf18cbfe5cdc89d824828a19e827d2e756d3d1af',
         'to': '0x5d57c62e214879ca9c6979a349d8bf8f39b167d2',
@@ -70,6 +68,11 @@ void main() {
       print(pool.minedBlocks.first.miner);
       print(pool.minedBlocks.first.number);
       print(pool.minedBlocks.first.time);
+    });
+    test('Json to workers', () async {
+      final workers = await minersRepo.getWorkers(walletId);
+      expect(workers, isInstanceOf<List<Workers>>());
+      print(workers.length);
     });
   });
 }
