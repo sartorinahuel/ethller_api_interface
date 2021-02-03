@@ -14,6 +14,7 @@ class EthermineMinerRepository extends MinersRepository {
       final history = await updateMinerHistory(minerId);
       final payouts = await updateMinerPayouts(minerId);
       final minPayout = await updateMinerMinPayout(minerId);
+      final workers = await getWorkers(minerId);
 
       //Building Miner object
       final currentMiner = Miner(
@@ -22,6 +23,7 @@ class EthermineMinerRepository extends MinersRepository {
         history: history,
         payouts: payouts,
         minPayout: minPayout,
+        workers: workers,
       );
 
       miner = currentMiner;
@@ -47,6 +49,7 @@ class EthermineMinerRepository extends MinersRepository {
           history: miner.history,
           minPayout: miner.minPayout,
           payouts: miner.payouts,
+          workers: miner.workers,
         );
 
         return currentStats;
@@ -85,6 +88,7 @@ class EthermineMinerRepository extends MinersRepository {
           history: history,
           minPayout: miner.minPayout,
           payouts: miner.payouts,
+          workers: miner.workers,
         );
         return history;
       } else {
@@ -118,6 +122,7 @@ class EthermineMinerRepository extends MinersRepository {
           history: miner.history,
           minPayout: minPayout,
           payouts: miner.payouts,
+          workers: miner.workers,
         );
         return minPayout;
       } else {
@@ -154,6 +159,7 @@ class EthermineMinerRepository extends MinersRepository {
           history: miner.history,
           minPayout: miner.minPayout,
           payouts: payouts,
+          workers: miner.workers,
         );
 
         return payouts;

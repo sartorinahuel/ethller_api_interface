@@ -6,12 +6,14 @@ class Miner {
   CurrentStats currentStats;
   List<MinerPayout> payouts;
   List<MinerHistory> history;
+  List<Workers> workers;
 
   Miner({
     this.id,
     this.currentStats,
     this.minPayout,
     this.history,
+    this.workers,
     this.payouts,
   });
 }
