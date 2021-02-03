@@ -4,7 +4,7 @@ class Workers {
   String worker;
   int time;
   int lastSeen;
-  int reportedHashrate;
+  double reportedHashrate;
   double currentHashrate;
   int validShares;
   int invalidShares;
@@ -29,12 +29,12 @@ class Workers {
     worker = json['worker'];
     time = json['time'];
     lastSeen = json['lastSeen'];
-    reportedHashrate = json['reportedHashrate'];
-    currentHashrate = json['currentHashrate'];
+    reportedHashrate = json['reportedHashrate'].toDouble() / 1000;
+    currentHashrate = json['currentHashrate'].toDouble() / 1000;
     validShares = json['validShares'];
     invalidShares = json['invalidShares'];
     staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'];
+    averageHashrate = json['averageHashrate'].toDouble() / 1000;
   }
 
   Map<String, dynamic> toJson() {
