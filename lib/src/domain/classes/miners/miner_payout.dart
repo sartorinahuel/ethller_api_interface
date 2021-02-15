@@ -16,11 +16,13 @@ class MinerPayout {
   });
 
   MinerPayout.fromJson(Map<String, dynamic> json) {
-    start = json['start'];
-    end = json['end'];
-    amount = json['amount'] / 1000000000000000000;
-    txHash = json['txHash'];
-    paidOn = DateTime.fromMillisecondsSinceEpoch(json['paidOn'] * 1000);
+    start = json['start'] ?? 0;
+    end = json['end'] ?? 0;
+    amount = json['amount'] == null ? 0.0 : json['amount'] / 1000000000000000000;
+    txHash = json['amount'] == null ? 0.0 : json['txHash'];
+    paidOn = json['amount'] == null
+        ? DateTime.fromMillisecondsSinceEpoch(1)
+        : DateTime.fromMillisecondsSinceEpoch(json['paidOn'] * 1000);
   }
 
   Map<String, dynamic> toJson() {

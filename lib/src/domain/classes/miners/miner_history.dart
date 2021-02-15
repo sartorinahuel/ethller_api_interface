@@ -22,14 +22,15 @@ class MinerHistory {
   });
 
   MinerHistory.fromJson(Map<String, dynamic> json) {
-    time = DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000);
-    reportedHashrate = json['reportedHashrate'] / 1000000;
-    currentHashrate = json['currentHashrate'] / 1000000;
-    validShares = json['validShares'];
-    invalidShares = json['invalidShares'];
-    staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'] / 1000000;
-    activeWorkers = json['activeWorkers'];
+    time =
+        json['time'] == null ? DateTime.fromMillisecondsSinceEpoch(1) : DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000);
+    reportedHashrate = json['reportedHashrate'] == null ? 0.0 : json['reportedHashrate'] / 1000000;
+    currentHashrate = json['currentHashrate'] == null ? 0.0 : json['currentHashrate'] / 1000000;
+    validShares = json['validShares'] ?? 0;
+    invalidShares = json['invalidShares'] ?? 0;
+    staleShares = json['staleShares'] ?? 0;
+    averageHashrate = json['averageHashrate'] == null ? 0.0 : json['averageHashrate'] / 1000000;
+    activeWorkers = json['activeWorkers'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

@@ -32,19 +32,20 @@ class CurrentStats {
   });
 
   CurrentStats.fromJson(Map<String, dynamic> json) {
-    time = DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000);
-    lastSeen = DateTime.fromMillisecondsSinceEpoch(json['lastSeen'] * 1000);
-    reportedHashrate = json['reportedHashrate'] / 1000000;
-    currentHashrate = json['currentHashrate'] / 1000000;
-    validShares = json['validShares'];
-    invalidShares = json['invalidShares'];
-    staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'] / 1000000;
-    activeWorkers = json['activeWorkers'];
-    unpaid = json['unpaid'] / 1000000000000000000;
-    coinsPerMin = json['coinsPerMin'];
-    usdPerMin = json['usdPerMin'];
-    btcPerMin = json['btcPerMin'];
+    time =
+        json['time'] == null ? DateTime.fromMillisecondsSinceEpoch(1) : DateTime.fromMillisecondsSinceEpoch(json['time'] * 1000);
+    lastSeen = json['lastSeen'] == null ? null : DateTime.fromMillisecondsSinceEpoch(json['lastSeen'] * 1000);
+    reportedHashrate = json['reportedHashrate'] == null ? null : json['reportedHashrate'] / 1000000;
+    currentHashrate = json['currentHashrate'] == null ? null : json['currentHashrate'] / 1000000;
+    validShares = json['validShares'] ?? 0;
+    invalidShares = json['invalidShares'] ?? 0;
+    staleShares = json['lastSeen'] ?? 0;
+    averageHashrate = json['averageHashrate'] == null ? null : json['averageHashrate'] / 1000000;
+    activeWorkers = json['activeWorkers'] ?? 0;
+    unpaid = json['unpaid'] == null ? null : json['unpaid'] / 1000000000000000000;
+    coinsPerMin = json['coinsPerMin'] ?? 0;
+    usdPerMin = json['usdPerMin'] ?? 0;
+    btcPerMin = json['btcPerMin'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

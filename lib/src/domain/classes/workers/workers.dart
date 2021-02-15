@@ -26,15 +26,15 @@ class Workers {
   });
 
   Workers.fromJson(Map<String, dynamic> json) {
-    worker = json['worker'];
-    time = json['time'];
-    lastSeen = json['lastSeen'];
-    reportedHashrate = json['reportedHashrate'].toDouble() / 1000000;
-    currentHashrate = json['currentHashrate'].toDouble() / 1000000;
-    validShares = json['validShares'];
-    invalidShares = json['invalidShares'];
-    staleShares = json['staleShares'];
-    averageHashrate = json['averageHashrate'].toDouble() / 1000000;
+    worker = json['worker'] ?? '';
+    time = json['time'] ?? 0;
+    lastSeen = json['lastSeen'] ?? 0;
+    reportedHashrate = json['reportedHashrate'] == null ? 0.0 : json['reportedHashrate'].toDouble() / 1000000;
+    currentHashrate = json['reportedHashrate'] == null ? 0.0 : json['currentHashrate'].toDouble() / 1000000;
+    validShares = json['validShares'] ?? 0;
+    invalidShares = json['invalidShares'] ?? 0;
+    staleShares = json['staleShares'] ?? 0;
+    averageHashrate = json['reportedHashrate'] == null ? 0.0 : json['averageHashrate'].toDouble() / 1000000;
   }
 
   Map<String, dynamic> toJson() {

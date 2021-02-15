@@ -186,11 +186,13 @@ class EthermineMinerRepository extends MinersRepository {
       final response = await ethermineClient.get(url, headers: headers);
       final rawData = json.decode(response.body);
       if (rawData['status'] == 'OK' && rawData['data'] != 'NO DATA') {
-        for (var item in rawData['data']) {
-          final h = Workers.fromJson(item);
-          final history = await getWorkerHistory(minerId, h.worker);
-          h.history = history;
-          workers.add(h);
+        if (rawData['data'].length != 0) {
+          for (var item in rawData['data']) {
+            final h = Workers.fromJson(item);
+            final history = await getWorkerHistory(minerId, h.worker);
+            h.history = history;
+            workers.add(h);
+          }
         }
         return workers;
       } else {
